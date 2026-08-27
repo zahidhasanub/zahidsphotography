@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zahid Hasan | Photography Portfolio</title>
+    
+    <!-- ফ্যাভিকন -->
     <link rel="icon" type="image/png" href="images/favicon.png">
     
     <!-- গুগল ফন্ট (Anek Bangla) -->
@@ -11,29 +13,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&display=swap" rel="stylesheet">
     
+    <!-- সোশ্যাল মিডিয়া আইকনের জন্য FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         /* মিনিমালিস্টিক লাইট থিম (CSS) */
         body {
             font-family: 'Anek Bangla', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #F9F9F9; /* স্নিগ্ধ অফ-হোয়াইট ব্যাকগ্রাউন্ড */
-            color: #333333; /* গাঢ় ধূসর রঙের লেখা */
+            background-color: #F9F9F9; 
+            color: #333333; 
         }
         header {
             text-align: center;
             padding: 60px 20px;
-            background-color: #FFFFFF; /* হেডারের ব্যাকগ্রাউন্ড সাদা */
-            border-bottom: 1px solid #EAEAEA; /* নিচে হালকা একটি দাগ */
+            background-color: #FFFFFF; 
+            border-bottom: 1px solid #EAEAEA; 
         }
         header h1 {
             margin: 0;
             font-size: 3em; 
             font-weight: 700;
-            color: #111111; /* নামের কালার প্রায় কালো */
+            color: #111111; 
         }
         header p {
-            color: #777777; /* সাব-টাইটেলের কালার হালকা ধূসর */
+            color: #777777; 
             font-size: 1.2em;
             margin-top: 10px;
             font-weight: 400;
@@ -62,22 +67,41 @@
             height: 250px;
             object-fit: cover;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06); /* ছবির চারপাশে হালকা শ্যাডো */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .gallery img:hover {
-            transform: scale(1.03); /* মাউস নিলে ছবি সামান্য বড় হবে */
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12); /* মাউস নিলে শ্যাডো বাড়বে */
+            transform: scale(1.03); 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12); 
             cursor: pointer;
         }
+        
+        /* ফুটার ও সোশ্যাল মিডিয়া আইকনের স্টাইল */
         footer {
             text-align: center;
-            padding: 25px;
+            padding: 30px 20px;
             background-color: #FFFFFF;
             border-top: 1px solid #EAEAEA;
             margin-top: 50px;
-            font-size: 1em;
             color: #888888;
+        }
+        .social-links {
+            margin-bottom: 15px;
+        }
+        .social-links a {
+            color: #555555; /* আইকনের রং */
+            font-size: 1.6em; /* আইকনের সাইজ */
+            margin: 0 12px; /* আইকনগুলোর মাঝের দূরত্ব */
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #4CAF50; /* মাউস নিলে সবুজ রং হবে */
+            transform: scale(1.2); /* মাউস নিলে আইকন সামান্য বড় হবে */
+        }
+        footer p {
+            margin: 0;
+            font-size: 1em;
         }
     </style>
 </head>
@@ -93,7 +117,7 @@
         <!-- আপনার সম্পর্কে -->
         <section class="about">
             <h2 style="font-weight: 600; color: #222222;">আমার সম্পর্কে</h2>
-            <p>হ্যালো! আমি জাহিদ হাসান। পেশায় একজন আইটি প্রফেশনাল হলেও, ট্রেকিং, ক্যাম্পিং এবং প্রকৃতির ছবি তোলা আমার অন্যতম শখ। আমি একজন গুগল লোকাল গাইড হিসেবেও কাজ করি। আমার গ্রামের বাড়ি কুড়িগ্রামের ছোটখাটামারি হলেও, বর্তমানে আমি চট্টগ্রামে বসবাস করছি। চট্টগ্রামের বিভিন্ন ট্রেইল ও পাহাড়ের সৌন্দর্য ফ্রেমবন্দী করতে আমি দারুণ ভালোবাসি।</p>
+            <p>হ্যালো! আমি জাহিদ হাসান। পেশায় একজন আইটি প্রফেশনাল হলেও, ট্রেকিং, ক্যাম্পিং এবং প্রকৃতির ছবি তোলা আমার অন্যতম শখ। আমি একজন গুগল লোকাল গাইড হিসেবেও কাজ করি। বর্তমানে আমি চট্টগ্রামে বসবাস করছি। চট্টগ্রামের বিভিন্ন ট্রেইল ও পাহাড়ের সৌন্দর্য ফ্রেমবন্দী করতে আমি দারুণ ভালোবাসি।</p>
         </section>
 
         <!-- ছবির গ্যালারি -->
@@ -110,8 +134,14 @@
         </section>
     </div>
 
-    <!-- ফুটার -->
+    <!-- ফুটার ও সোশ্যাল মিডিয়া -->
     <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/zzahidhasann" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/zahid.bd" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/zahidhasanub" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:zahidhasan.ub@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
         <p>&copy; 2026 Zahid Hasan. All Rights Reserved.</p>
     </footer>
 
