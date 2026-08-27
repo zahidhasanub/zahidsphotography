@@ -5,37 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zahid Hasan | Photography Portfolio</title>
     
-    <!-- গুগল ফন্ট (Anek Bangla) যুক্ত করা হলো -->
+    <!-- গুগল ফন্ট (Anek Bangla) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ওয়েবসাইটের ডিজাইন (CSS) */
+        /* মিনিমালিস্টিক লাইট থিম (CSS) */
         body {
-            /* ফন্ট ফ্যামিলিতে নতুন বাংলা ফন্ট দেওয়া হলো */
             font-family: 'Anek Bangla', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #121212; 
-            color: #ffffff;
+            background-color: #F9F9F9; /* স্নিগ্ধ অফ-হোয়াইট ব্যাকগ্রাউন্ড */
+            color: #333333; /* গাঢ় ধূসর রঙের লেখা */
         }
         header {
             text-align: center;
             padding: 60px 20px;
-            background-color: #1e1e1e;
-            border-bottom: 3px solid #4CAF50;
+            background-color: #FFFFFF; /* হেডারের ব্যাকগ্রাউন্ড সাদা */
+            border-bottom: 1px solid #EAEAEA; /* নিচে হালকা একটি দাগ */
         }
         header h1 {
             margin: 0;
             font-size: 3em; 
             font-weight: 700;
+            color: #111111; /* নামের কালার প্রায় কালো */
         }
         header p {
-            color: #aaaaaa;
+            color: #777777; /* সাব-টাইটেলের কালার হালকা ধূসর */
             font-size: 1.2em;
             margin-top: 10px;
             font-weight: 400;
+            letter-spacing: 1px;
         }
         .container {
             max-width: 1000px;
@@ -44,15 +45,15 @@
         }
         .about {
             text-align: center;
-            padding: 40px 0;
+            padding: 50px 20px;
             line-height: 1.8;
             font-size: 1.2em; 
-            color: #dddddd;
+            color: #444444;
         }
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            gap: 20px;
             padding: 20px 0;
         }
         .gallery img {
@@ -60,19 +61,22 @@
             height: 250px;
             object-fit: cover;
             border-radius: 8px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); /* ছবির চারপাশে হালকা শ্যাডো */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .gallery img:hover {
-            transform: scale(1.05); 
+            transform: scale(1.03); /* মাউস নিলে ছবি সামান্য বড় হবে */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12); /* মাউস নিলে শ্যাডো বাড়বে */
             cursor: pointer;
         }
         footer {
             text-align: center;
-            padding: 20px;
-            background-color: #1e1e1e;
+            padding: 25px;
+            background-color: #FFFFFF;
+            border-top: 1px solid #EAEAEA;
             margin-top: 50px;
             font-size: 1em;
-            color: #777;
+            color: #888888;
         }
     </style>
 </head>
@@ -87,13 +91,13 @@
     <div class="container">
         <!-- আপনার সম্পর্কে -->
         <section class="about">
-            <h2 style="font-weight: 600;">আমার সম্পর্কে</h2>
+            <h2 style="font-weight: 600; color: #222222;">আমার সম্পর্কে</h2>
             <p>হ্যালো! আমি জাহিদ হাসান। পেশায় একজন আইটি প্রফেশনাল হলেও, ট্রেকিং, ক্যাম্পিং এবং প্রকৃতির ছবি তোলা আমার অন্যতম শখ। আমি একজন গুগল লোকাল গাইড হিসেবেও কাজ করি। আমার গ্রামের বাড়ি কুড়িগ্রামের ছোটখাটামারি হলেও, বর্তমানে আমি চট্টগ্রামে বসবাস করছি। চট্টগ্রামের বিভিন্ন ট্রেইল ও পাহাড়ের সৌন্দর্য ফ্রেমবন্দী করতে আমি দারুণ ভালোবাসি।</p>
         </section>
 
         <!-- ছবির গ্যালারি -->
         <section>
-            <h2 style="text-align: center; margin-bottom: 30px; font-weight: 600;">আমার তোলা কিছু ছবি</h2>
+            <h2 style="text-align: center; margin-bottom: 40px; font-weight: 600; color: #222222;">আমার তোলা কিছু ছবি</h2>
             <div class="gallery">
                 <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়ে ট্রেকিং">
                 <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইলের সৌন্দর্য">
