@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>যোগাযোগ | Zahid Hasan</title>
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Anek Bangla', sans-serif; margin: 0; padding: 0; background-color: #F9F9F9; color: #333333; }
+        header { text-align: center; padding: 60px 20px; background-color: #FFFFFF; border-bottom: 1px solid #EAEAEA; }
+        header h1 { margin: 0; font-size: 3em; font-weight: 700; color: #111111; }
+        header p { color: #777777; font-size: 1.2em; margin-top: 10px; font-weight: 400; letter-spacing: 1px; }
+        
+        /* নেভিগেশন মেনু */
+        .nav-menu { margin-top: 25px; }
+        .nav-menu a { text-decoration: none; font-weight: 600; font-size: 1.2em; margin: 0 15px; padding-bottom: 5px; transition: color 0.3s ease; color: #777777; }
+        .nav-menu a:hover { color: #111111; }
+        .nav-menu a.active { color: #111111; border-bottom: 2px solid #111111; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* কন্টাক্ট ফর্ম স্টাইল */
+        .contact-wrapper { max-width: 600px; margin: 0 auto; background: #FFFFFF; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #222222; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #DDDDDD; border-radius: 5px; font-family: 'Anek Bangla', sans-serif; font-size: 1em; box-sizing: border-box; outline: none; transition: border-color 0.3s; }
+        .form-control:focus { border-color: #4CAF50; }
+        textarea.form-control { height: 150px; resize: vertical; }
+        .submit-btn { background-color: #222222; color: #FFFFFF; border: none; padding: 12px 30px; font-size: 1.1em; font-weight: 600; border-radius: 5px; cursor: pointer; transition: background 0.3s; width: 100%; font-family: 'Anek Bangla', sans-serif; }
+        .submit-btn:hover { background-color: #4CAF50; }
+        
+        footer { text-align: center; padding: 30px 20px; background-color: #FFFFFF; border-top: 1px solid #EAEAEA; margin-top: 50px; color: #888888; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>জাহিদ হাসান</h1>
+        <p>Photography & Adventure Portfolio</p>
+        <div class="nav-menu">
+            <a href="index.html">হোম</a>
+            <a href="blog.html">ব্লগ</a>
+            <a href="contact.html" class="active">যোগাযোগ</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="contact-wrapper">
+            <h2 style="text-align: center; margin-top: 0; color: #222222;">আমাকে মেসেজ পাঠান</h2>
+            <p style="text-align: center; color: #777; margin-bottom: 30px;">যেকোনো প্রয়োজনে যোগাযোগ করতে পারেন।</p>
+            
+            <!-- ফর্ম সাবমিট অ্যাকশন -->
+            <form action="https://formsubmit.co/zahidhasan.ub@gmail.com" method="POST">
+                
+                <!-- স্প্যাম ঠেকানোর জন্য কিছু হিডেন সেটিংস -->
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="আপনার ওয়েবসাইট থেকে নতুন মেসেজ এসেছে!">
+                
+                <div class="form-group">
+                    <label>আপনার নাম:</label>
+                    <input type="text" name="name" class="form-control" placeholder="আপনার নাম লিখুন" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>ইমেইল ঠিকানা:</label>
+                    <input type="email" name="email" class="form-control" placeholder="আপনার ইমেইল ঠিকানা" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>বার্তা (Message):</label>
+                    <textarea name="message" class="form-control" placeholder="আপনার মেসেজ এখানে লিখুন..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> পাঠিয়ে দিন</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Zahid Hasan. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
