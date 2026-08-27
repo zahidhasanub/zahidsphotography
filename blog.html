@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahid Hasan | Travel & Adventure Blog</title>
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Anek Bangla', sans-serif; margin: 0; padding: 0; background-color: #F9F9F9; color: #333333; }
+        header { text-align: center; padding: 60px 20px; background-color: #FFFFFF; border-bottom: 1px solid #EAEAEA; }
+        header h1 { margin: 0; font-size: 3em; font-weight: 700; color: #111111; }
+        header p { color: #777777; font-size: 1.2em; margin-top: 10px; font-weight: 400; letter-spacing: 1px; }
+        .nav-menu { margin-top: 25px; }
+        .nav-menu a { text-decoration: none; font-weight: 600; font-size: 1.2em; margin: 0 15px; padding-bottom: 5px; transition: color 0.3s ease; }
+        .nav-menu a.inactive { color: #777777; }
+        .nav-menu a.inactive:hover { color: #111111; }
+        .nav-menu a.active { color: #111111; border-bottom: 2px solid #111111; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        /* ব্লগ কার্ডের স্টাইল */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px 0; }
+        .blog-card { background: #FFFFFF; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.3s ease; }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .blog-card img { width: 100%; height: 220px; object-fit: cover; }
+        .blog-content { padding: 20px; }
+        .blog-date { color: #888888; font-size: 0.9em; margin-bottom: 10px; display: block; }
+        .blog-title { margin: 0 0 15px 0; font-size: 1.5em; color: #222222; }
+        .blog-excerpt { color: #555555; line-height: 1.6; margin-bottom: 20px; }
+        .read-more { display: inline-block; padding: 8px 20px; background-color: #222222; color: #FFFFFF; text-decoration: none; border-radius: 5px; font-weight: 600; transition: background 0.3s; }
+        .read-more:hover { background-color: #4CAF50; }
+        
+        footer { text-align: center; padding: 30px 20px; background-color: #FFFFFF; border-top: 1px solid #EAEAEA; margin-top: 50px; color: #888888; }
+        footer p { margin: 0; font-size: 1em; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>জাহিদ হাসান</h1>
+        <p>Photography & Adventure Portfolio</p>
+        <div class="nav-menu">
+            <a href="index.html" class="inactive">হোম</a>
+            <a href="blog.html" class="active">ব্লগ</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
+        
+        <div class="blog-grid">
+            <!-- ব্লগ পোস্ট ১ -->
+            <div class="blog-card">
+                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
+                <div class="blog-content">
+                    <span class="blog-date"><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬</span>
+                    <h3 class="blog-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h3>
+                    <p class="blog-excerpt">চট্টগ্রামের সীতাকুণ্ডে অবস্থিত চন্দ্রনাথ পাহাড় ট্রেকিংয়ের অভিজ্ঞতা সবসময়ই রোমাঞ্চকর। পাহাড়ি আঁকাবাঁকা পথ আর মেঘের লুকোচুরি উপভোগ করতে করতে চূড়ায় ওঠার ক্লান্তি যেন নিমিষেই দূর হয়ে যায়।</p>
+                    <a href="#" class="read-more">আরও পড়ুন</a>
+                </div>
+            </div>
+
+            <!-- ব্লগ পোস্ট ২ -->
+            <div class="blog-card">
+                <img src="images/pic3.jpg" alt="ক্যাম্পিং">
+                <div class="blog-content">
+                    <span class="blog-date"><i class="far fa-calendar-alt"></i> জুলাই ২০২৬</span>
+                    <h3 class="blog-title">পাহাড়ের বুকে তাঁবু বাস</h3>
+                    <p class="blog-excerpt">শহরের কোলাহল থেকে দূরে, প্রকৃতির খুব কাছাকাছি তাঁবু খাটিয়ে রাত কাটানোর অনুভূতিই অন্যরকম। রাতের নিস্তব্ধতায় ক্যাম্পফায়ারের পাশে বসে আড্ডা আর আকাশের তারা গোনার দারুণ এক স্মৃতি।</p>
+                    <a href="#" class="read-more">আরও পড়ুন</a>
+                </div>
+            </div>
+
+            <!-- ব্লগ পোস্ট ৩ -->
+            <div class="blog-card">
+                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
+                <div class="blog-content">
+                    <span class="blog-date"><i class="far fa-calendar-alt"></i> জুন ২০২৬</span>
+                    <h3 class="blog-title">নাপিত্তাছড়া ট্রেইল জয়</h3>
+                    <p class="blog-excerpt">প্রকৃতির এক অপরূপ সৃষ্টি এই নাপিত্তাছড়া। ঝর্ণার শীতল জল আর সবুজ পাহাড়ি পথ ধরে হাঁটার রোমাঞ্চকর অভিজ্ঞতা সত্যি ভোলার মতো নয়। অফলাইন ম্যাপ আর ট্রেকিং গিয়ার সাথে থাকায় পথ চলতে বেশ সুবিধাই হয়েছে।</p>
+                    <a href="#" class="read-more">আরও পড়ুন</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Zahid Hasan. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
