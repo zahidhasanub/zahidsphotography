@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="bn">
     <style>
-        /* মিনিমালিস্টিক কালার প্যালেট */
-        body { background-color: #F4F3EF !important; color: #2C2C2C !important; }
-        header, .container, .blog-card, .contact-wrapper { background-color: #FCFBF8 !important; border: 1px solid #EBE9E1 !important; box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important; }
-        h1, h2, h3 { color: #1A1A1A !important; }
+        /* নতুন সিনেম্যাটিক হেডার ডিজাইন */
+        body { background-color: #f8f9fa; }
+        header { 
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/pic1.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            padding: 120px 20px; 
+            text-align: center; 
+            border: none !important;
+            margin-bottom: 40px;
+        }
+        header h1 { color: #ffffff !important; font-size: 4em !important; font-weight: 700; margin: 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+        header p { color: #dddddd !important; font-size: 1.3em; margin-top: 10px; letter-spacing: 2px; }
+        .nav-menu { margin-top: 40px; }
+        .nav-menu a { color: #dddddd !important; font-weight: 600; font-size: 1.2em; margin: 0 15px; padding-bottom: 5px; text-decoration: none; transition: color 0.3s; }
+        .nav-menu a:hover { color: #4CAF50 !important; }
+        .nav-menu a.active { color: #ffffff !important; border-bottom: 2px solid #4CAF50 !important; }
+    </style>
     </style>
 <head>
     <!-- Google tag (gtag.js) -->
@@ -130,12 +144,10 @@
     <header>
         <h1>জাহিদ হাসান</h1>
         <p>Photography & Adventure Portfolio</p>
-        <!-- নেভিগেশন মেনু -->
-<!-- নেভিগেশন মেনু -->
-        <div style="margin-top: 25px;">
-            <a href="index.html" style="text-decoration: none; color: #111; font-weight: 700; font-size: 1.2em; margin: 0 15px; border-bottom: 2px solid #111; padding-bottom: 5px;">হোম</a>
-            <a href="blog.html" style="text-decoration: none; color: #777; font-weight: 600; font-size: 1.2em; margin: 0 15px;">ব্লগ</a>
-            <a href="contact.html" style="text-decoration: none; color: #777; font-weight: 600; font-size: 1.2em; margin: 0 15px;">যোগাযোগ</a>
+        <div class="nav-menu">
+            <a href="index.html" class="active">হোম</a>
+            <a href="blog.html">ব্লগ</a>
+            <a href="contact.html">যোগাযোগ</a>
         </div>
     </header>
 
