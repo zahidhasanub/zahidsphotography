@@ -60,23 +60,22 @@
         <!-- ভেক্টর ম্যাপের স্টাইল -->
         <style>
             #my-travel-map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 40px; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
-            .leaflet-tooltip { font-family: 'Anek Bangla', sans-serif; font-weight: 600; font-size: 14px; color: #111; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+            .leaflet-tooltip { font-family: 'Anek Bangla', sans-serif; font-weight: 600; font-size: 14px; color: #111; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         </style>
 
         <!-- ম্যাপের কন্টেইনার -->
         <div id="my-travel-map"></div>
 
-        <!-- ভেক্টর ম্যাপ চালু করার জাভাস্ক্রিপ্ট -->
+        <!-- ভেক্টর ম্যাপ চালু করার জাভাস্ক্রিপ্ট (Smart & Robust Version) -->
         <script>
-            // ১. ম্যাপ সেটআপ (সাদা ব্যাকগ্রাউন্ড)
             var map = L.map('my-travel-map', {
-                center: [23.6850, 90.3563], // বাংলাদেশের কেন্দ্র
+                center: [23.6850, 90.3563], 
                 zoom: 7,
                 minZoom: 6,
                 zoomControl: true
             });
 
-            // ২. ভ্রমণ করা জেলা এবং ব্লগের লিংক
+            // আপনার ভ্রমণ করা জেলাগুলো
             var visitedDistricts = {
                 "Chittagong": "post1.html",   
                 "Chattogram": "post1.html",   
@@ -88,47 +87,60 @@
                 "Sylhet": "#"                 
             };
 
-            // ৩. ৬৪ জেলার GeoJSON ডেটা (নতুন ফাস্ট লিংক)
-            var geojsonUrl = 'https://cdn.jsdelivr.net/gh/yasserius/bangladesh_geojson_shapefile@master/small_bangladesh_geojson_adm2_64_districts_zillas.json';
+            // দুটি সোর্স লিংক (প্রথমটি ফেল করলে দ্বিতীয়টি কাজ করবে)
+            var primaryUrl = 'https://raw.githubusercontent.com/strativ-dev/bangladesh-geojson/master/districts.json';
+            var backupUrl = 'https://raw.githubusercontent.com/fahim-sc/bangladesh-geojson/master/bd-districts.json';
 
-            fetch(geojsonUrl)
-                .then(response => response.json())
-                .then(data => {
-                    L.geoJSON(data, {
-                        style: function (feature) {
-                            // ডেটা থেকে জেলার নাম নেওয়া
-                            var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
-                            
-                            // জেলাটি ভিজিটেড লিস্টে থাকলে হলুদ, নাহলে ছাই রং
-                            if (distName && visitedDistricts[distName]) {
-                                return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
-                            } else {
-                                return { color: "#ffffff", weight: 1.5, fillColor: "#E0E0E0", fillOpacity: 0.7 }; 
-                            }
-                        },
-                        onEachFeature: function (feature, layer) {
-                            var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
-                            
-                            if(distName) {
-                                layer.bindTooltip(distName, {sticky: true});
-                            }
-                            
-                            layer.on('click', function () {
-                                if (visitedDistricts[distName] && visitedDistricts[distName] !== "#") {
-                                    window.location.href = visitedDistricts[distName];
-                                } else if (visitedDistricts[distName] === "#") {
-                                    alert(distName + " নিয়ে খুব শিগগিরই ব্লগ আসছে!");
+            function loadMapData(url) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Data Load Failed");
+                        return response.json();
+                    })
+                    .then(data => {
+                        var geojsonLayer = L.geoJSON(data, {
+                            style: function (feature) {
+                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
+                                if (distName && visitedDistricts[distName]) {
+                                    return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
                                 } else {
-                                    alert("আপনি এখনো " + (distName || "এই জেলায়") + " ভ্রমণ করেননি!");
+                                    return { color: "#ffffff", weight: 1.5, fillColor: "#E0E0E0", fillOpacity: 0.7 }; 
                                 }
-                            });
-                            
-                            layer.on('mouseover', function () { this.setStyle({ weight: 3, color: '#222' }); });
-                            layer.on('mouseout', function () { this.setStyle({ weight: 1.5, color: '#ffffff' }); });
+                            },
+                            onEachFeature: function (feature, layer) {
+                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
+                                if(distName) {
+                                    layer.bindTooltip(distName, {sticky: true});
+                                }
+                                layer.on('click', function () {
+                                    if (visitedDistricts[distName] && visitedDistricts[distName] !== "#") {
+                                        window.location.href = visitedDistricts[distName];
+                                    } else if (visitedDistricts[distName] === "#") {
+                                        alert(distName + " নিয়ে খুব শিগগিরই ব্লগ আসছে!");
+                                    } else {
+                                        alert("আপনি এখনো " + (distName || "এই জেলায়") + " ভ্রমণ করেননি!");
+                                    }
+                                });
+                                layer.on('mouseover', function () { this.setStyle({ weight: 3, color: '#222' }); });
+                                layer.on('mouseout', function () { this.setStyle({ weight: 1.5, color: '#ffffff' }); });
+                            }
+                        }).addTo(map);
+
+                        // ম্যাপটিকে স্ক্রিনের ঠিক মাঝখানে ফিট করে দেবে!
+                        map.fitBounds(geojsonLayer.getBounds());
+                    })
+                    .catch(error => {
+                        console.warn("URL Failed: " + url);
+                        if (url === primaryUrl) {
+                            loadMapData(backupUrl); // ব্যাকআপ লিংকে চেষ্টা করবে
+                        } else {
+                            document.getElementById('my-travel-map').innerHTML = "<p style='text-align:center; padding-top:200px; color:red; font-weight:bold;'>ম্যাপ লোড হতে সমস্যা হচ্ছে! দয়া করে ইন্টারনেট চেক করে পেজটি রিলোড দিন।</p>";
                         }
-                    }).addTo(map);
-                })
-                .catch(error => console.error("Map Data Loading Error:", error));
+                    });
+            }
+
+            // ম্যাপ লোড করা শুরু
+            loadMapData(primaryUrl);
         </script>
         
         <div class="blog-grid">
@@ -138,7 +150,7 @@
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬</span>
                     <h3 class="blog-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h3>
-                    <p class="blog-excerpt">চট্টগ্রামের সীতাকুণ্ডে অবস্থিত চন্দ্রনাথ পাহাড় ট্রেকিংয়ের অভিজ্ঞতা সবসময়ই রোমাঞ্চকর। পাহাড়ি আঁকাবাঁকা পথ আর মেঘের লুকোচুরি উপভোগ করতে করতে চূড়ায় ওঠার ক্লান্তি যেন নিমিষেই দূর হয়ে যায়。</p>
+                    <p class="blog-excerpt">চট্টগ্রামের সীতাকুণ্ডে অবস্থিত চন্দ্রনাথ পাহাড় ট্রেকিংয়ের অভিজ্ঞতা সবসময়ই রোমাঞ্চকর। পাহাড়ি আঁকাবাঁকা পথ আর মেঘের লুকোচুরি উপভোগ করতে করতে চূড়ায় ওঠার ক্লান্তি যেন নিমিষেই দূর হয়ে যায়।</p>
                     <a href="post1.html" class="read-more">আরও পড়ুন</a>
                 </div>
             </div>
@@ -149,7 +161,7 @@
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> জুলাই ২০২৬</span>
                     <h3 class="blog-title">পাহাড়ের বুকে তাঁবু বাস</h3>
-                    <p class="blog-excerpt">শহরের কোলাহল থেকে দূরে, প্রকৃতির খুব কাছাকাছি তাঁবু খাটিয়ে রাত কাটানোর অনুভূতিই অন্যরকম। রাতের নিস্তব্ধতায় ক্যাম্পফায়ারের পাশে বসে আড্ডা আর আকাশের তারা গোনার দারুণ এক স্মৃতি。</p>
+                    <p class="blog-excerpt">শহরের কোলাহল থেকে দূরে, প্রকৃতির খুব কাছাকাছি তাঁবু খাটিয়ে রাত কাটানোর অনুভূতিই অন্যরকম। রাতের নিস্তব্ধতায় ক্যাম্পফায়ারের পাশে বসে আড্ডা আর আকাশের তারা গোনার দারুণ এক স্মৃতি।</p>
                     <a href="post2.html" class="read-more">আরও পড়ুন</a>
                 </div>
             </div>
@@ -160,7 +172,7 @@
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> জুন ২০২৬</span>
                     <h3 class="blog-title">নাপিত্তাছড়া ট্রেইল জয়</h3>
-                    <p class="blog-excerpt">প্রকৃতির এক অপরূপ সৃষ্টি এই নাপিত্তাছড়া। ঝর্ণার শীতল জল আর সবুজ পাহাড়ি পথ ধরে হাঁটার রোমাঞ্চকর অভিজ্ঞতা সত্যি ভোলার মতো নয়। অফলাইন ম্যাপ আর ট্রেকিং গিয়ার সাথে থাকায় পথ চলতে বেশ সুবিধাই হয়েছে。</p>
+                    <p class="blog-excerpt">প্রকৃতির এক অপরূপ সৃষ্টি এই নাপিত্তাছড়া। ঝর্ণার শীতল জল আর সবুজ পাহাড়ি পথ ধরে হাঁটার রোমাঞ্চকর অভিজ্ঞতা সত্যি ভোলার মতো নয়। অফলাইন ম্যাপ আর ট্রেকিং গিয়ার সাথে থাকায় পথ চলতে বেশ সুবিধাই হয়েছে।</p>
                     <a href="post3.html" class="read-more">আরও পড়ুন</a>
                 </div>
             </div>
