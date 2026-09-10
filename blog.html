@@ -55,6 +55,37 @@
 
     <div class="container">
         <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
+        <!-- ম্যাপের স্টাইল -->
+        <style>
+            #my-travel-map { height: 400px; width: 100%; border-radius: 8px; margin-bottom: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
+            .leaflet-popup-content-wrapper { font-family: 'Anek Bangla', sans-serif; text-align: center; }
+            .leaflet-popup-content a { display: inline-block; margin-top: 8px; padding: 5px 12px; background: #4CAF50; color: white; text-decoration: none; border-radius: 4px; font-weight: 600; }
+            .leaflet-popup-content a:hover { background: #222; }
+        </style>
+
+        <!-- ম্যাপের কন্টেইনার -->
+        <div id="my-travel-map"></div>
+
+        <!-- ম্যাপ চালু করার জাভাস্ক্রিপ্ট -->
+        <script>
+            // ১. ম্যাপ তৈরি এবং বাংলাদেশের সেন্টারে সেট করা (Latitude, Longitude, Zoom Level)
+            var map = L.map('my-travel-map').setView([23.6850, 90.3563], 6.5);
+
+            // ২. ম্যাপের ডিজাইন (টাইলস) যুক্ত করা
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // ৩. পিন ১: চন্দ্রনাথ পাহাড় (post1.html)
+            var marker1 = L.marker([22.6272, 91.6841]).addTo(map);
+            marker1.bindPopup("<b>চন্দ্রনাথ পাহাড়</b><br>সীতাকুণ্ড, চট্টগ্রাম<br><a href='post1.html'>ব্লগটি পড়ুন</a>");
+
+            // ৪. পিন ২: নাপিত্তাছড়া ট্রেইল (post3.html)
+            var marker2 = L.marker([22.7554, 91.6445]).addTo(map);
+            marker2.bindPopup("<b>নাপিত্তাছড়া ট্রেইল</b><br>মীরসরাই, চট্টগ্রাম<br><a href='post3.html'>ব্লগটি পড়ুন</a>");
+            
+            // ভবিষ্যতে আরও পিন যুক্ত করতে চাইলে ঠিক উপরের মতো কোড কপি করে ল্যাটিচ্যুড ও লংগিচ্যুড বসিয়ে দেবেন।
+        </script>
         
         <div class="blog-grid">
             <!-- ব্লগ পোস্ট ১ -->
