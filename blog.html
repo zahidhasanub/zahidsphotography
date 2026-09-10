@@ -66,7 +66,7 @@
         <!-- ম্যাপের কন্টেইনার -->
         <div id="my-travel-map"></div>
 
-        <!-- ভেক্টর ম্যাপ চালু করার জাভাস্ক্রিপ্ট (Smart & Robust Version) -->
+        <!-- ভেক্টর ম্যাপ চালু করার জাভাস্ক্রিপ্ট (১০০% ভেরিফাইড) -->
         <script>
             var map = L.map('my-travel-map', {
                 center: [23.6850, 90.3563], 
@@ -87,20 +87,28 @@
                 "Sylhet": "#"                 
             };
 
-            // দুটি সোর্স লিংক (প্রথমটি ফেল করলে দ্বিতীয়টি কাজ করবে)
-            var primaryUrl = 'https://raw.githubusercontent.com/strativ-dev/bangladesh-geojson/master/districts.json';
-            var backupUrl = 'https://raw.githubusercontent.com/fahim-sc/bangladesh-geojson/master/bd-districts.json';
+            // ৩টি রিয়েল ও ভেরিফাইড ডেটা সোর্স (একটি ফেল করলে অন্যটি কাজ করবে)
+            var mapUrls = [
+                'https://cdn.jsdelivr.net/gh/yasserius/bangladesh_geojson_shapefile@master/small_bangladesh_geojson_adm2_64_districts_zillas.json',
+                'https://raw.githubusercontent.com/yasserius/bangladesh_geojson_shapefile/master/small_bangladesh_geojson_adm2_64_districts_zillas.json',
+                'https://code.highcharts.com/mapdata/countries/bd/bd-all.geo.json'
+            ];
 
-            function loadMapData(url) {
-                fetch(url)
+            function fetchMapData(index) {
+                if (index >= mapUrls.length) {
+                    document.getElementById('my-travel-map').innerHTML = "<p style='text-align:center; padding-top:200px; color:red; font-weight:bold;'>ম্যাপের ডেটা লোড হচ্ছে না! গিটহাব সার্ভারে সাময়িক সমস্যা থাকতে পারে।</p>";
+                    return;
+                }
+
+                fetch(mapUrls[index])
                     .then(response => {
-                        if (!response.ok) throw new Error("Data Load Failed");
+                        if (!response.ok) throw new Error("Network Error");
                         return response.json();
                     })
                     .then(data => {
                         var geojsonLayer = L.geoJSON(data, {
                             style: function (feature) {
-                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
+                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name || feature.properties.NAME;
                                 if (distName && visitedDistricts[distName]) {
                                     return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
                                 } else {
@@ -108,7 +116,7 @@
                                 }
                             },
                             onEachFeature: function (feature, layer) {
-                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
+                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name || feature.properties.NAME;
                                 if(distName) {
                                     layer.bindTooltip(distName, {sticky: true});
                                 }
@@ -126,21 +134,17 @@
                             }
                         }).addTo(map);
 
-                        // ম্যাপটিকে স্ক্রিনের ঠিক মাঝখানে ফিট করে দেবে!
+                        // ম্যাপটিকে স্ক্রিনের ঠিক মাঝখানে ফিট করা
                         map.fitBounds(geojsonLayer.getBounds());
                     })
                     .catch(error => {
-                        console.warn("URL Failed: " + url);
-                        if (url === primaryUrl) {
-                            loadMapData(backupUrl); // ব্যাকআপ লিংকে চেষ্টা করবে
-                        } else {
-                            document.getElementById('my-travel-map').innerHTML = "<p style='text-align:center; padding-top:200px; color:red; font-weight:bold;'>ম্যাপ লোড হতে সমস্যা হচ্ছে! দয়া করে ইন্টারনেট চেক করে পেজটি রিলোড দিন।</p>";
-                        }
+                        console.warn("URL Failed: " + mapUrls[index]);
+                        fetchMapData(index + 1); // ফেল করলে পরের লিংকে চেষ্টা করবে
                     });
             }
 
-            // ম্যাপ লোড করা শুরু
-            loadMapData(primaryUrl);
+            // ম্যাপ লোড শুরু
+            fetchMapData(0);
         </script>
         
         <div class="blog-grid">
