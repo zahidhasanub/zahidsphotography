@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zahid Hasan | Travel & Adventure Blog</title>
     
+    <!-- Highcharts Maps লাইব্রেরি ও বাংলাদেশ ম্যাপ ডেটা -->
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/bd/bd-all.js"></script>
+    
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,72 +27,19 @@
         .nav-menu a.active { color: #111111; border-bottom: 2px solid #111111; }
         .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
         
-        /* ম্যাপ বক্স */
+        /* মানচিত্র কন্টেইনার */
         .map-section {
             background: #FFFFFF;
             border-radius: 12px;
-            padding: 30px 20px;
+            padding: 25px;
             margin-bottom: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             text-align: center;
         }
-        .map-wrapper {
-            position: relative;
-            max-width: 520px;
+        #travel-map-container {
+            height: 580px;
+            max-width: 700px;
             margin: 0 auto;
-        }
-        .map-wrapper svg {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
-        }
-        
-        /* বাস্তবসম্মত ভেক্টর শেপ স্টাইল */
-        .division-path {
-            fill: #E2E8F0;
-            stroke: #FFFFFF;
-            stroke-width: 1.8;
-            stroke-linejoin: round;
-            stroke-linecap: round;
-            cursor: pointer;
-            transition: fill 0.25s ease, stroke 0.25s ease, filter 0.25s ease;
-        }
-        .division-path.visited {
-            fill: #FACC15; /* কাঙ্ক্ষিত গোল্ডেন হলুদ */
-        }
-        .division-path:hover {
-            fill: #38BDF8;
-            stroke: #0F172A;
-            stroke-width: 2.2;
-        }
-        .division-path.visited:hover {
-            fill: #EAB308;
-            stroke: #0F172A;
-            stroke-width: 2.2;
-        }
-        
-        .map-labels text {
-            font-family: 'Anek Bangla', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            fill: #1E293B;
-            pointer-events: none;
-            text-anchor: middle;
-        }
-
-        /* পপআপ টুলটিপ */
-        #map-tooltip {
-            position: absolute;
-            display: none;
-            background: #0F172A;
-            color: #FFFFFF;
-            padding: 8px 14px;
-            font-size: 13px;
-            border-radius: 6px;
-            pointer-events: none;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            line-height: 1.4;
         }
 
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px 0; }
@@ -119,67 +70,16 @@
     </header>
 
     <div class="container">
-        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
+        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
         
         <div class="map-section">
-            <p style="margin: 0 0 20px; color: #64748B; font-size: 15px;">হলুদ চিহ্নিত অঞ্চলে ক্লিক করে ভ্রমণ ব্লগ পড়ুন</p>
-            
-            <div class="map-wrapper" id="map-wrapper">
-                <div id="map-tooltip"></div>
-                
-                <!-- প্রাকৃতিক সীমারেখা অনুযায়ী তৈরি করা বাংলাদেশের ভেক্টর ম্যাপ -->
-                <svg viewBox="0 0 600 760" xmlns="http://www.w3.org/2000/svg">
-                    
-                    <!-- রংপুর বিভাগ (কুড়িগ্রাম সহ উত্তরবঙ্গীয় খাঁজকাটা সীমানা) -->
-                    <path id="rangpur" class="division-path" data-name="রংপুর বিভাগ (কুড়িগ্রাম)" data-url="#" 
-                          d="M175,32 C185,25 205,48 215,62 C230,85 240,70 250,95 C265,115 285,118 290,140 C280,165 245,160 235,178 C225,195 210,215 195,225 C175,200 160,185 162,150 C155,120 135,100 145,70 C150,50 165,40 175,32 Z" />
-                    
-                    <!-- রাজশাহী বিভাগ (পশ্চিমাঞ্চলীয় পদ্মার বাঁক) -->
-                    <path id="rajshahi" class="division-path" data-name="রাজশাহী বিভাগ" data-url="#" 
-                          d="M162,150 C160,185 175,200 195,225 C190,250 205,280 190,305 C165,310 130,320 115,285 C95,255 105,220 120,185 C135,155 150,152 162,150 Z" />
-                    
-                    <!-- ময়মনসিংহ বিভাগ (গারো পাহাড় সংলগ্ন উত্তর সীমানা) -->
-                    <path id="mymensingh" class="division-path" data-name="ময়মনসিংহ বিভাগ" data-url="#" 
-                          d="M235,178 C245,160 280,165 290,140 C325,145 365,135 385,155 C380,180 375,210 365,235 C335,240 300,245 270,230 C250,225 240,205 235,178 Z" />
-                    
-                    <!-- সিলেট বিভাগ (শ্রীমঙ্গল ও মৌলভীবাজারের পাহাড়ি বাঁক) -->
-                    <path id="sylhet" class="division-path visited" data-name="সিলেট বিভাগ (মৌলভীবাজার - তাঁবুবাস)" data-url="post2.html" 
-                          d="M385,155 C410,145 460,150 495,170 C515,195 520,240 480,265 C450,285 410,295 385,280 C365,270 375,210 385,155 Z" />
-                    
-                    <!-- ঢাকা বিভাগ (বুড়িগঙ্গা ও মধ্যাঞ্চল) -->
-                    <path id="dhaka" class="division-path" data-name="ঢাকা বিভাগ" data-url="#" 
-                          d="M190,305 C205,280 190,250 195,225 C210,215 240,205 270,230 C300,245 335,240 365,235 C375,265 385,280 365,315 C345,345 315,370 275,375 C235,380 205,345 190,305 Z" />
-                    
-                    <!-- খুলনা বিভাগ (সুন্দরবনের খাঁজকাটা ম্যানগ্রোভ উপকূল) -->
-                    <path id="khulna" class="division-path" data-name="খুলনা বিভাগ (সুন্দরবন)" data-url="#" 
-                          d="M115,285 C130,320 165,310 190,305 C205,345 235,380 240,430 C235,480 230,525 210,560 C170,565 145,540 135,480 C125,410 100,340 115,285 Z" />
-                    
-                    <!-- বরিশাল বিভাগ (উপকূলীয় নদ-নদী ও দ্বীপ অঞ্চল) -->
-                    <path id="barishal" class="division-path" data-name="বরিশাল বিভাগ" data-url="#" 
-                          d="M240,430 C275,375 315,370 310,425 C315,475 320,520 295,565 C265,575 245,550 235,510 C230,470 238,445 240,430 Z" />
-                    
-                    <!-- চট্টগ্রাম বিভাগ (সীতাকুণ্ড, বান্দরবান ও কক্সবাজারের দীর্ঘ খাঁজকাটা পাহাড়) -->
-                    <path id="chattogram" class="division-path visited" data-name="চট্টগ্রাম বিভাগ (চন্দ্রনাথ পাহাড় ও নাপিত্তাছড়া)" data-url="post1.html" 
-                          d="M365,315 C385,280 410,295 435,325 C470,370 510,430 525,510 C540,590 500,685 470,740 C455,735 440,650 435,580 C420,500 375,440 330,420 C315,370 345,345 365,315 Z" />
-
-                    <!-- প্রশাসনিক নামের লেবেল -->
-                    <g class="map-labels">
-                        <text x="210" y="115">রংপুর</text>
-                        <text x="145" y="235">রাজশাহী</text>
-                        <text x="305" y="195">ময়মনসিংহ</text>
-                        <text x="445" y="225">সিলেট</text>
-                        <text x="275" y="295">ঢাকা</text>
-                        <text x="165" y="425">খুলনা</text>
-                        <text x="275" y="485">বরিশাল</text>
-                        <text x="430" y="480">চট্টগ্রাম</text>
-                    </g>
-                </svg>
-            </div>
+            <p style="margin: 0 0 15px; color: #64748B; font-size: 15px;">হলুদ চিহ্নিত জেলাগুলোতে ক্লিক করে ভ্রমণ ব্লগ পড়ুন</p>
+            <div id="travel-map-container"></div>
         </div>
 
         <div class="blog-grid">
             <div class="blog-card">
-                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
+                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬</span>
                     <h3 class="blog-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h3>
@@ -199,7 +99,7 @@
             </div>
 
             <div class="blog-card">
-                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
+                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> জুন ২০২৬</span>
                     <h3 class="blog-title">নাপিত্তাছড়া ট্রেইল জয়</h3>
@@ -215,37 +115,87 @@
     </footer>
 
     <script>
-        const tooltip = document.getElementById('map-tooltip');
-        const wrapper = document.getElementById('map-wrapper');
-        const paths = document.querySelectorAll('.division-path');
+        // ভ্রমণ করা জেলার তালিকা (হলুদ রঙ) এবং সংশ্লিষ্ট ব্লগের লিঙ্ক
+        const visitedDistricts = {
+            'Chittagong': { bangla: 'চট্টগ্রাম (চন্দ্রনাথ ও নাপিত্তাছড়া)', url: 'post1.html' },
+            'Moulvibazar': { bangla: 'মৌলভীবাজার (তাঁবুবাস)', url: 'post2.html' },
+            'Cox\'s Bazar': { bangla: 'কক্সবাজার', url: 'post3.html' },
+            'Kurigram': { bangla: 'কুড়িগ্রাম', url: '#' },
+            'Sylhet': { bangla: 'সিলেট', url: '#' }
+        };
 
-        paths.forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const name = el.getAttribute('data-name');
-                const isVisited = el.classList.contains('visited');
-                
-                tooltip.style.display = 'block';
-                tooltip.innerHTML = `<strong>${name}</strong><br><span style="font-size:11px; color:${isVisited ? '#FACC15' : '#94A3B8'}">${isVisited ? 'ভ্রমণ সম্পন্ন (ব্লগ পড়ুন)' : 'এখনো ভ্রমণ করা হয়নি'}</span>`;
-                
-                const rect = wrapper.getBoundingClientRect();
-                tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
-                tooltip.style.top = (e.clientY - rect.top - 20) + 'px';
-            });
+        const mapGeoData = Highcharts.maps['countries/bd/bd-all'];
+        
+        // প্রতিটি জেলার ডেটা ম্যাপিং
+        const processedData = mapGeoData.features.map(f => {
+            const name = f.properties.name;
+            const isVisited = visitedDistricts.hasOwnProperty(name);
+            return {
+                'hc-key': f.properties['hc-key'],
+                name: name,
+                color: isVisited ? '#FACC15' : '#E2E8F0', // ভিজিটেড জেলা সোনালি হলুদ, বাকিগুলো সফট গ্রে
+                visited: isVisited
+            };
+        });
 
-            el.addEventListener('mouseleave', () => {
-                tooltip.style.display = 'none';
-            });
-
-            el.addEventListener('click', () => {
-                const url = el.getAttribute('data-url');
-                if (url && url !== '#') {
-                    window.location.href = url;
-                } else if (el.classList.contains('visited')) {
-                    alert(el.getAttribute('data-name') + " নিয়ে খুব শিগগিরই নতুন ব্লগ যুক্ত হবে!");
-                } else {
-                    alert(el.getAttribute('data-name') + "-তে এখনো ভ্রমণ ব্লগ তৈরি করা হয়নি।");
+        Highcharts.mapChart('travel-map-container', {
+            chart: {
+                map: 'countries/bd/bd-all',
+                backgroundColor: 'transparent'
+            },
+            title: { text: null },
+            credits: { enabled: false },
+            mapNavigation: {
+                enabled: true,
+                buttonOptions: { verticalAlign: 'bottom' }
+            },
+            tooltip: {
+                useHTML: true,
+                formatter: function () {
+                    const info = visitedDistricts[this.point.name];
+                    const label = info ? info.bangla : this.point.name;
+                    const status = this.point.visited 
+                        ? '<span style="color:#D97706; font-weight:bold;">ভ্রমণ সম্পন্ন (ক্লিক করে পড়ুন)</span>' 
+                        : '<span style="color:#64748B;">এখনো ভ্রমণ করা হয়নি</span>';
+                    return `<div style="font-family:'Anek Bangla', sans-serif; text-align:center; padding:4px;">
+                                <strong>${label}</strong><br>${status}
+                            </div>`;
                 }
-            });
+            },
+            plotOptions: {
+                series: {
+                    borderColor: '#FFFFFF',
+                    borderWidth: 1.2,
+                    states: {
+                        hover: {
+                            color: '#38BDF8',
+                            borderColor: '#0F172A',
+                            borderWidth: 1.5
+                        }
+                    },
+                    point: {
+                        events: {
+                            click: function () {
+                                const info = visitedDistricts[this.name];
+                                if (info && info.url && info.url !== '#') {
+                                    window.location.href = info.url;
+                                } else if (info) {
+                                    alert(info.bangla + " নিয়ে শিগগিরই ব্লগ আসছে!");
+                                } else {
+                                    alert(this.name + " জেলায় এখনো ভ্রমণ ব্লগ নেই!");
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                data: processedData,
+                name: 'বাংলাদেশ',
+                dataLabels: {
+                    enabled: false
+                }
+            }]
         });
     </script>
 </body>
