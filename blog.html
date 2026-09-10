@@ -60,7 +60,7 @@
         <!-- ভেক্টর ম্যাপের স্টাইল -->
         <style>
             #my-travel-map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 40px; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
-            .leaflet-tooltip { font-family: 'Anek Bangla', sans-serif; font-weight: 600; font-size: 14px; color: #111; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+            .leaflet-tooltip { font-family: 'Anek Bangla', sans-serif; font-weight: 600; font-size: 14px; color: #111; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         </style>
 
         <!-- ম্যাপের কন্টেইনার -->
@@ -76,53 +76,59 @@
                 zoomControl: true
             });
 
-            // ২. ভ্রমণ করা জেলা এবং ব্লগের লিংক (এগুলো হলুদ হবে)
+            // ২. ভ্রমণ করা জেলা এবং ব্লগের লিংক
             var visitedDistricts = {
-                "Chittagong": "post1.html",   // চট্টগ্রাম (চন্দ্রনাথ/নাপিত্তাছড়া)
-                "Moulvibazar": "post2.html",  // মৌলভীবাজার (ক্যাম্পিং)
-                "Cox's Bazar": "#",           // কক্সবাজার
-                "Kurigram": "#",              // কুড়িগ্রাম
-                "Sylhet": "#"                 // সিলেট
+                "Chittagong": "post1.html",   
+                "Chattogram": "post1.html",   
+                "Moulvibazar": "post2.html",  
+                "Maulvibazar": "post2.html",  
+                "Cox's Bazar": "#",           
+                "Coxs Bazar": "#",           
+                "Kurigram": "#",              
+                "Sylhet": "#"                 
             };
 
-            // ৩. ৬৪ জেলার GeoJSON ডেটা লোড করে ম্যাপে বসানো
-            fetch('https://raw.githubusercontent.com/strativ-dev/bangladesh-geojson/master/districts.json')
+            // ৩. ৬৪ জেলার GeoJSON ডেটা (নতুন ফাস্ট লিংক)
+            var geojsonUrl = 'https://cdn.jsdelivr.net/gh/yasserius/bangladesh_geojson_shapefile@master/small_bangladesh_geojson_adm2_64_districts_zillas.json';
+
+            fetch(geojsonUrl)
                 .then(response => response.json())
                 .then(data => {
                     L.geoJSON(data, {
                         style: function (feature) {
-                            var distName = feature.properties.name;
+                            // ডেটা থেকে জেলার নাম নেওয়া
+                            var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
                             
                             // জেলাটি ভিজিটেড লিস্টে থাকলে হলুদ, নাহলে ছাই রং
-                            if (visitedDistricts[distName]) {
+                            if (distName && visitedDistricts[distName]) {
                                 return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
                             } else {
                                 return { color: "#ffffff", weight: 1.5, fillColor: "#E0E0E0", fillOpacity: 0.7 }; 
                             }
                         },
                         onEachFeature: function (feature, layer) {
-                            var distName = feature.properties.name;
+                            var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name;
                             
-                            // মাউস নিলে জেলার নাম দেখাবে
-                            layer.bindTooltip(distName, {sticky: true});
+                            if(distName) {
+                                layer.bindTooltip(distName, {sticky: true});
+                            }
                             
-                            // ক্লিক করলে ব্লগে রিডাইরেক্ট হবে
                             layer.on('click', function () {
                                 if (visitedDistricts[distName] && visitedDistricts[distName] !== "#") {
                                     window.location.href = visitedDistricts[distName];
                                 } else if (visitedDistricts[distName] === "#") {
                                     alert(distName + " নিয়ে খুব শিগগিরই ব্লগ আসছে!");
                                 } else {
-                                    alert("আপনি এখনো " + distName + " ভ্রমণ করেননি বা কোনো ব্লগ নেই!");
+                                    alert("আপনি এখনো " + (distName || "এই জেলায়") + " ভ্রমণ করেননি!");
                                 }
                             });
                             
-                            // মাউস হোভার করলে বর্ডার একটু মোটা হবে
                             layer.on('mouseover', function () { this.setStyle({ weight: 3, color: '#222' }); });
                             layer.on('mouseout', function () { this.setStyle({ weight: 1.5, color: '#ffffff' }); });
                         }
                     }).addTo(map);
-                });
+                })
+                .catch(error => console.error("Map Data Loading Error:", error));
         </script>
         
         <div class="blog-grid">
