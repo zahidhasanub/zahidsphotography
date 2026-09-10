@@ -8,13 +8,13 @@
     <!-- Leaflet Map CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
     <style>
         body { font-family: 'Anek Bangla', sans-serif; margin: 0; padding: 0; background-color: #F9F9F9; color: #333333; }
         header { text-align: center; padding: 60px 20px; background-color: #FFFFFF; border-bottom: 1px solid #EAEAEA; }
@@ -26,7 +26,7 @@
         .nav-menu a.inactive:hover { color: #111111; }
         .nav-menu a.active { color: #111111; border-bottom: 2px solid #111111; }
         .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
+
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px 0; }
         .blog-card { background: #FFFFFF; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.3s ease; }
         .blog-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
@@ -37,7 +37,7 @@
         .blog-excerpt { color: #555555; line-height: 1.6; margin-bottom: 20px; }
         .read-more { display: inline-block; padding: 8px 20px; background-color: #222222; color: #FFFFFF; text-decoration: none; border-radius: 5px; font-weight: 600; transition: background 0.3s; }
         .read-more:hover { background-color: #4CAF50; }
-        
+
         footer { text-align: center; padding: 30px 20px; background-color: #FFFFFF; border-top: 1px solid #EAEAEA; margin-top: 50px; color: #888888; }
         footer p { margin: 0; font-size: 1em; }
     </style>
@@ -56,17 +56,17 @@
 
     <div class="container">
         <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
-        
-        <!-- ভেক্টর ম্যাপের স্টাইল -->
+
+        <!-- ম্যাপের স্টাইল -->
         <style>
-            #my-travel-map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 40px; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
+            #my-travel-map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 40px; background-color: #f4f6f8; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
             .leaflet-tooltip { font-family: 'Anek Bangla', sans-serif; font-weight: 600; font-size: 14px; color: #111; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         </style>
 
         <!-- ম্যাপের কন্টেইনার -->
         <div id="my-travel-map"></div>
 
-        <!-- ভেক্টর ম্যাপ চালু করার জাভাস্ক্রিপ্ট (১০০% ভেরিফাইড) -->
+        <!-- ম্যাপ চালু করার নতুন ফিক্সড জাভাস্ক্রিপ্ট -->
         <script>
             var map = L.map('my-travel-map', {
                 center: [23.6850, 90.3563], 
@@ -81,72 +81,67 @@
                 "Chattogram": "post1.html",   
                 "Moulvibazar": "post2.html",  
                 "Maulvibazar": "post2.html",  
-                "Cox's Bazar": "#",           
-                "Coxs Bazar": "#",           
+                "Cox's Bazar": "post3.html",           
+                "Coxs Bazar": "post3.html",           
                 "Kurigram": "#",              
                 "Sylhet": "#"                 
             };
 
-            // ৩টি রিয়েল ও ভেরিফাইড ডেটা সোর্স (একটি ফেল করলে অন্যটি কাজ করবে)
-            var mapUrls = [
-                'https://cdn.jsdelivr.net/gh/yasserius/bangladesh_geojson_shapefile@master/small_bangladesh_geojson_adm2_64_districts_zillas.json',
-                'https://raw.githubusercontent.com/yasserius/bangladesh_geojson_shapefile/master/small_bangladesh_geojson_adm2_64_districts_zillas.json',
-                'https://code.highcharts.com/mapdata/countries/bd/bd-all.geo.json'
-            ];
+            // সবচেয়ে নির্ভরযোগ্য গ্লোবাল সোর্স (GeoBoundaries)
+            var geojsonUrl = 'https://raw.githubusercontent.com/wmgeolab/geoBoundaries/main/releaseData/gbOpen/BGD/ADM2/geoBoundaries-BGD-ADM2.geojson';
 
-            function fetchMapData(index) {
-                if (index >= mapUrls.length) {
-                    document.getElementById('my-travel-map').innerHTML = "<p style='text-align:center; padding-top:200px; color:red; font-weight:bold;'>ম্যাপের ডেটা লোড হচ্ছে না! গিটহাব সার্ভারে সাময়িক সমস্যা থাকতে পারে।</p>";
-                    return;
-                }
-
-                fetch(mapUrls[index])
-                    .then(response => {
-                        if (!response.ok) throw new Error("Network Error");
-                        return response.json();
-                    })
-                    .then(data => {
-                        var geojsonLayer = L.geoJSON(data, {
-                            style: function (feature) {
-                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name || feature.properties.NAME;
-                                if (distName && visitedDistricts[distName]) {
-                                    return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
-                                } else {
-                                    return { color: "#ffffff", weight: 1.5, fillColor: "#E0E0E0", fillOpacity: 0.7 }; 
-                                }
-                            },
-                            onEachFeature: function (feature, layer) {
-                                var distName = feature.properties.ADM2_EN || feature.properties.NAME_2 || feature.properties.name || feature.properties.NAME;
-                                if(distName) {
-                                    layer.bindTooltip(distName, {sticky: true});
-                                }
-                                layer.on('click', function () {
-                                    if (visitedDistricts[distName] && visitedDistricts[distName] !== "#") {
-                                        window.location.href = visitedDistricts[distName];
-                                    } else if (visitedDistricts[distName] === "#") {
-                                        alert(distName + " নিয়ে খুব শিগগিরই ব্লগ আসছে!");
-                                    } else {
-                                        alert("আপনি এখনো " + (distName || "এই জেলায়") + " ভ্রমণ করেননি!");
-                                    }
-                                });
-                                layer.on('mouseover', function () { this.setStyle({ weight: 3, color: '#222' }); });
-                                layer.on('mouseout', function () { this.setStyle({ weight: 1.5, color: '#ffffff' }); });
+            fetch(geojsonUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network Error");
+                    return response.json();
+                })
+                .then(data => {
+                    // ডেটা লোড হলে ব্যাকগ্রাউন্ড সাদা হয়ে যাবে
+                    document.getElementById('my-travel-map').style.backgroundColor = '#ffffff';
+                    
+                    var geojsonLayer = L.geoJSON(data, {
+                        style: function (feature) {
+                            var distName = feature.properties.shapeName || feature.properties.shapeGroup || feature.properties.ADM2_EN;
+                            if (distName && visitedDistricts[distName]) {
+                                return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
+                            } else {
+                                return { color: "#ffffff", weight: 1.5, fillColor: "#E0E0E0", fillOpacity: 0.7 }; 
                             }
-                        }).addTo(map);
+                        },
+                        onEachFeature: function (feature, layer) {
+                            var distName = feature.properties.shapeName || feature.properties.shapeGroup || feature.properties.ADM2_EN;
+                            if(distName) {
+                                layer.bindTooltip(distName, {sticky: true});
+                            }
+                            layer.on('click', function () {
+                                if (visitedDistricts[distName] && visitedDistricts[distName] !== "#") {
+                                    window.location.href = visitedDistricts[distName];
+                                } else if (visitedDistricts[distName] === "#") {
+                                    alert(distName + " নিয়ে খুব শিগগিরই ব্লগ আসছে!");
+                                } else {
+                                    alert("আপনি এখনো " + (distName || "এই জেলায়") + " ভ্রমণ করেননি!");
+                                }
+                            });
+                            layer.on('mouseover', function () { this.setStyle({ weight: 3, color: '#222' }); });
+                            layer.on('mouseout', function () { this.setStyle({ weight: 1.5, color: '#ffffff' }); });
+                        }
+                    }).addTo(map);
 
-                        // ম্যাপটিকে স্ক্রিনের ঠিক মাঝখানে ফিট করা
-                        map.fitBounds(geojsonLayer.getBounds());
-                    })
-                    .catch(error => {
-                        console.warn("URL Failed: " + mapUrls[index]);
-                        fetchMapData(index + 1); // ফেল করলে পরের লিংকে চেষ্টা করবে
-                    });
-            }
+                    map.fitBounds(geojsonLayer.getBounds());
+                })
+                .catch(error => {
+                    // যদি ডেটা লোড ফেইল করে, তবে ম্যাপ আর সাদা থাকবে না, একটি ব্যাকআপ ম্যাপ লোড হবে!
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
 
-            // ম্যাপ লোড শুরু
-            fetchMapData(0);
+                    // আপনার ভ্রমণ করা জায়গার লোকেশনে হলুদ পিন বসিয়ে দেবে
+                    L.circleMarker([22.6272, 91.6841], {color: '#FFD700', radius: 10, fillOpacity: 0.9}).addTo(map).bindPopup("<b>চন্দ্রনাথ পাহাড়</b><br><a href='post1.html'>ব্লগ পড়ুন</a>");
+                    L.circleMarker([22.7554, 91.6445], {color: '#FFD700', radius: 10, fillOpacity: 0.9}).addTo(map).bindPopup("<b>নাপিত্তাছড়া ট্রেইল</b><br><a href='post3.html'>ব্লগ পড়ুন</a>");
+                    L.circleMarker([24.3275, 91.7828], {color: '#FFD700', radius: 10, fillOpacity: 0.9}).addTo(map).bindPopup("<b>মৌলভীবাজার ক্যাম্পিং</b><br><a href='post2.html'>ব্লগ পড়ুন</a>");
+                });
         </script>
-        
+
         <div class="blog-grid">
             <!-- ব্লগ পোস্ট ১ -->
             <div class="blog-card">
