@@ -23,62 +23,67 @@
         .nav-menu a.active { color: #111111; border-bottom: 2px solid #111111; }
         .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
         
-        /* ভেক্টর ম্যাপ বক্স */
+        /* ম্যাপ বক্স */
         .map-section {
             background: #FFFFFF;
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px 20px;
             margin-bottom: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             text-align: center;
         }
         .map-wrapper {
             position: relative;
-            max-width: 600px;
+            max-width: 480px;
             margin: 0 auto;
         }
         .map-wrapper svg {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05));
         }
         
-        /* জেলার ডিফল্ট ও ভিজিটেড স্টাইল */
-        .district {
+        /* ভেক্টর পাথ স্টাইল */
+        .division-path {
             fill: #E2E8F0;
             stroke: #FFFFFF;
-            stroke-width: 1.2;
+            stroke-width: 2.5;
             cursor: pointer;
-            transition: fill 0.25s ease, stroke 0.25s ease, transform 0.25s ease;
+            transition: all 0.25s ease;
         }
-        .district.visited {
-            fill: #FACC15; /* কাঙ্ক্ষিত গোল্ডেন হলুদ */
+        .division-path.visited {
+            fill: #FACC15; /* হাইলাইট হলুদ */
         }
-        .district:hover {
+        .division-path:hover {
             fill: #38BDF8;
             stroke: #0F172A;
-            stroke-width: 1.8;
         }
-        .district.visited:hover {
+        .division-path.visited:hover {
             fill: #EAB308;
             stroke: #0F172A;
-            stroke-width: 1.8;
+        }
+        
+        .map-labels text {
+            font-family: 'Anek Bangla', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            fill: #1E293B;
+            pointer-events: none;
+            text-anchor: middle;
         }
 
-        /* টুলটিপ */
+        /* পপআপ টুলটিপ */
         #map-tooltip {
             position: absolute;
             display: none;
-            background: rgba(15, 23, 42, 0.9);
+            background: #0F172A;
             color: #FFFFFF;
-            padding: 6px 12px;
+            padding: 8px 14px;
             font-size: 13px;
-            font-weight: 600;
             border-radius: 6px;
             pointer-events: none;
             z-index: 100;
-            white-space: nowrap;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            line-height: 1.4;
         }
 
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px 0; }
@@ -109,19 +114,66 @@
     </header>
 
     <div class="container">
-        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
+        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
         
         <div class="map-section">
-            <p style="margin: 0 0 15px; color: #64748B; font-size: 15px;">হলুদ চিহ্নিত জেলাগুলোতে ক্লিক করে ভ্রমণ ব্লগ পড়ুন</p>
-            <div class="map-wrapper">
+            <p style="margin: 0 0 20px; color: #64748B; font-size: 15px;">হলুদ চিহ্নিত অঞ্চলে ক্লিক করে ভ্রমণ ব্লগ পড়ুন</p>
+            
+            <div class="map-wrapper" id="map-wrapper">
                 <div id="map-tooltip"></div>
-                <div id="svg-container">লোড হচ্ছে...</div>
+                
+                <!-- সম্পূর্ণ স্বনির্ভর ইনলাইন ভেক্টর ম্যাপ -->
+                <svg viewBox="0 0 500 680" xmlns="http://www.w3.org/2000/svg">
+                    <!-- রংপুর অঞ্চল -->
+                    <path id="rangpur" class="division-path" data-name="রংপুর অঞ্চল (কুড়িগ্রাম)" data-url="#" 
+                          d="M 160 20 L 220 50 L 240 120 L 190 170 L 140 150 L 110 80 Z" />
+                    
+                    <!-- রাজশাহী অঞ্চল -->
+                    <path id="rajshahi" class="division-path" data-name="রাজশাহী অঞ্চল" data-url="#" 
+                          d="M 110 80 L 140 150 L 190 170 L 170 260 L 90 240 L 70 170 Z" />
+                    
+                    <!-- ময়মনসিংহ অঞ্চল -->
+                    <path id="mymensingh" class="division-path" data-name="ময়মনসিংহ অঞ্চল" data-url="#" 
+                          d="M 190 170 L 240 120 L 310 150 L 300 230 L 230 240 L 200 210 Z" />
+                    
+                    <!-- সিলেট অঞ্চল (মৌলভীবাজার ভিজিটেড) -->
+                    <path id="sylhet" class="division-path visited" data-name="সিলেট অঞ্চল (মৌলভীবাজার - তাঁবুবাস)" data-url="post2.html" 
+                          d="M 310 150 L 410 140 L 440 210 L 380 280 L 300 230 Z" />
+                    
+                    <!-- ঢাকা অঞ্চল -->
+                    <path id="dhaka" class="division-path" data-name="ঢাকা অঞ্চল" data-url="#" 
+                          d="M 170 260 L 230 240 L 300 230 L 320 340 L 240 370 L 180 330 Z" />
+                    
+                    <!-- খুলনা অঞ্চল -->
+                    <path id="khulna" class="division-path" data-name="খুলনা অঞ্চল" data-url="#" 
+                          d="M 90 240 L 170 260 L 180 330 L 200 440 L 140 500 L 100 400 Z" />
+                    
+                    <!-- বরিশাল অঞ্চল -->
+                    <path id="barishal" class="division-path" data-name="বরিশাল অঞ্চল" data-url="#" 
+                          d="M 200 440 L 240 370 L 280 400 L 270 490 L 210 510 Z" />
+                    
+                    <!-- চট্টগ্রাম অঞ্চল (চন্দ্রনাথ ও নাপিত্তাছড়া ভিজিটেড) -->
+                    <path id="chattogram" class="division-path visited" data-name="চট্টগ্রাম অঞ্চল (চন্দ্রনাথ পাহাড় ও নাপিত্তাছড়া)" data-url="post1.html" 
+                          d="M 300 230 L 380 280 L 440 360 L 470 510 L 420 620 L 360 500 L 320 340 Z" />
+
+                    <!-- লেবেল -->
+                    <g class="map-labels">
+                        <text x="170" y="90">রংপুর</text>
+                        <text x="125" y="185">রাজশাহী</text>
+                        <text x="250" y="195">ময়মনসিংহ</text>
+                        <text x="375" y="210">সিলেট</text>
+                        <text x="245" y="305">ঢাকা</text>
+                        <text x="145" y="375">খুলনা</text>
+                        <text x="245" y="455">বরিশাল</text>
+                        <text x="395" y="440">চট্টগ্রাম</text>
+                    </g>
+                </svg>
             </div>
         </div>
 
         <div class="blog-grid">
             <div class="blog-card">
-                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
+                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬</span>
                     <h3 class="blog-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h3>
@@ -157,67 +209,38 @@
     </footer>
 
     <script>
-        const visitedConfig = {
-            "chattogram": { name: "চট্টগ্রাম", url: "post1.html" },
-            "moulvibazar": { name: "মৌলভীবাজার", url: "post2.html" },
-            "coxsbazar": { name: "কক্সবাজার", url: "post3.html" },
-            "kurigram": { name: "কুড়িগ্রাম", url: "#" },
-            "sylhet": { name: "সিলেট", url: "#" }
-        };
+        const tooltip = document.getElementById('map-tooltip');
+        const wrapper = document.getElementById('map-wrapper');
+        const paths = document.querySelectorAll('.division-path');
 
-        // উইকিপিডিয়া কমন্সের অফিশিয়াল ডিস্ট্রিক্ট এসভিজি ব্যবহার (১০০% ক্যাশড এবং কোনো এপিআই কি প্রয়োজন নেই)
-        fetch('https://raw.githubusercontent.com/ifahimreza/bangladesh-geojson/master/bd-districts.svg')
-            .catch(() => fetch('https://cdn.jsdelivr.net/gh/ifahimreza/bangladesh-geojson@master/bd-districts.svg'))
-            .then(res => res.text())
-            .then(svgText => {
-                const container = document.getElementById('svg-container');
-                container.innerHTML = svgText;
+        paths.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const name = el.getAttribute('data-name');
+                const isVisited = el.classList.contains('visited');
                 
-                const svg = container.querySelector('svg');
-                if(!svg) return;
-                svg.removeAttribute('width');
-                svg.removeAttribute('height');
-
-                const tooltip = document.getElementById('map-tooltip');
-                const paths = svg.querySelectorAll('path, polygon');
-
-                paths.forEach(el => {
-                    el.classList.add('district');
-                    const rawId = (el.id || el.getAttribute('name') || '').toLowerCase().replace(/[^a-z]/g, '');
-                    
-                    let matchedKey = Object.keys(visitedConfig).find(k => rawId.includes(k));
-                    if (matchedKey) {
-                        el.classList.add('visited');
-                    }
-
-                    el.addEventListener('mousemove', (e) => {
-                        const displayName = matchedKey ? visitedConfig[matchedKey].name : (el.getAttribute('title') || el.id || 'জেলা');
-                        tooltip.style.display = 'block';
-                        tooltip.textContent = displayName;
-                        const rect = container.getBoundingClientRect();
-                        tooltip.style.left = (e.clientX - rect.left + 10) + 'px';
-                        tooltip.style.top = (e.clientY - rect.top - 25) + 'px';
-                    });
-
-                    el.addEventListener('mouseleave', () => {
-                        tooltip.style.display = 'none';
-                    });
-
-                    el.addEventListener('click', () => {
-                        if (matchedKey) {
-                            const target = visitedConfig[matchedKey].url;
-                            if (target && target !== '#') {
-                                window.location.href = target;
-                            } else {
-                                alert(visitedConfig[matchedKey].name + " নিয়ে খুব শিগগিরই নতুন ব্লগ যুক্ত হবে!");
-                            }
-                        }
-                    });
-                });
-            })
-            .catch(err => {
-                document.getElementById('svg-container').innerHTML = "<p style='color:#EF4444; font-weight:600;'>ম্যাপ প্রস্তুত হচ্ছে, অনুগ্রহ করে পেজটি রিফ্রেশ করুন।</p>";
+                tooltip.style.display = 'block';
+                tooltip.innerHTML = `<strong>${name}</strong><br><span style="font-size:11px; color:${isVisited ? '#FACC15' : '#94A3B8'}">${isVisited ? 'ভ্রমণ সম্পন্ন (ব্লগ পড়ুন)' : 'এখনো ভ্রমণ করা হয়নি'}</span>`;
+                
+                const rect = wrapper.getBoundingClientRect();
+                tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
+                tooltip.style.top = (e.clientY - rect.top - 20) + 'px';
             });
+
+            el.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+
+            el.addEventListener('click', () => {
+                const url = el.getAttribute('data-url');
+                if (url && url !== '#') {
+                    window.location.href = url;
+                } else if (el.classList.contains('visited')) {
+                    alert(el.getAttribute('data-name') + " নিয়ে খুব শিগগিরই নতুন ব্লগ যুক্ত হবে!");
+                } else {
+                    alert(el.getAttribute('data-name') + "-তে এখনো ভ্রমণ ব্লগ তৈরি করা হয়নি।");
+                }
+            });
+        });
     </script>
 </body>
 </html>
