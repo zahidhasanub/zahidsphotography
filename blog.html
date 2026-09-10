@@ -8,6 +8,7 @@
     <!-- Leaflet Map CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,48 +55,85 @@
     </header>
 
     <div class="container">
-        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
-        <!-- ম্যাপের স্টাইল -->
+        <h2 style="text-align: center; font-weight: 600; color: #222222; margin-top: 20px;">আমার ভ্রমণ ডায়েরি</h2>
+        
+        <!-- ভেক্টর ম্যাপের স্টাইল -->
         <style>
-            #my-travel-map { height: 400px; width: 100%; border-radius: 8px; margin-bottom: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
-            .leaflet-popup-content-wrapper { font-family: 'Anek Bangla', sans-serif; text-align: center; }
-            .leaflet-popup-content a { display: inline-block; margin-top: 8px; padding: 5px 12px; background: #4CAF50; color: white; text-decoration: none; border-radius: 4px; font-weight: 600; }
-            .leaflet-popup-content a:hover { background: #222; }
+            #my-travel-map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 40px; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.06); z-index: 1; }
+            .leaflet-tooltip { font-family: 'Anek Bangla', sans-serif; font-weight: 600; font-size: 14px; color: #111; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         </style>
 
         <!-- ম্যাপের কন্টেইনার -->
         <div id="my-travel-map"></div>
 
-        <!-- ম্যাপ চালু করার জাভাস্ক্রিপ্ট -->
+        <!-- ভেক্টর ম্যাপ চালু করার জাভাস্ক্রিপ্ট -->
         <script>
-            // ১. ম্যাপ তৈরি এবং বাংলাদেশের সেন্টারে সেট করা (Latitude, Longitude, Zoom Level)
-            var map = L.map('my-travel-map').setView([23.6850, 90.3563], 6.5);
+            // ১. ম্যাপ সেটআপ (সাদা ব্যাকগ্রাউন্ড)
+            var map = L.map('my-travel-map', {
+                center: [23.6850, 90.3563], // বাংলাদেশের কেন্দ্র
+                zoom: 7,
+                minZoom: 6,
+                zoomControl: true
+            });
 
-            // ২. ম্যাপের ডিজাইন (টাইলস) যুক্ত করা
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
+            // ২. ভ্রমণ করা জেলা এবং ব্লগের লিংক (এগুলো হলুদ হবে)
+            var visitedDistricts = {
+                "Chittagong": "post1.html",   // চট্টগ্রাম (চন্দ্রনাথ/নাপিত্তাছড়া)
+                "Moulvibazar": "post2.html",  // মৌলভীবাজার (ক্যাম্পিং)
+                "Cox's Bazar": "#",           // কক্সবাজার
+                "Kurigram": "#",              // কুড়িগ্রাম
+                "Sylhet": "#"                 // সিলেট
+            };
 
-            // ৩. পিন ১: চন্দ্রনাথ পাহাড় (post1.html)
-            var marker1 = L.marker([22.6272, 91.6841]).addTo(map);
-            marker1.bindPopup("<b>চন্দ্রনাথ পাহাড়</b><br>সীতাকুণ্ড, চট্টগ্রাম<br><a href='post1.html'>ব্লগটি পড়ুন</a>");
-
-            // ৪. পিন ২: নাপিত্তাছড়া ট্রেইল (post3.html)
-            var marker2 = L.marker([22.7554, 91.6445]).addTo(map);
-            marker2.bindPopup("<b>নাপিত্তাছড়া ট্রেইল</b><br>মীরসরাই, চট্টগ্রাম<br><a href='post3.html'>ব্লগটি পড়ুন</a>");
-            
-            // ভবিষ্যতে আরও পিন যুক্ত করতে চাইলে ঠিক উপরের মতো কোড কপি করে ল্যাটিচ্যুড ও লংগিচ্যুড বসিয়ে দেবেন।
+            // ৩. ৬৪ জেলার GeoJSON ডেটা লোড করে ম্যাপে বসানো
+            fetch('https://raw.githubusercontent.com/strativ-dev/bangladesh-geojson/master/districts.json')
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            var distName = feature.properties.name;
+                            
+                            // জেলাটি ভিজিটেড লিস্টে থাকলে হলুদ, নাহলে ছাই রং
+                            if (visitedDistricts[distName]) {
+                                return { color: "#ffffff", weight: 1.5, fillColor: "#FFD700", fillOpacity: 0.9 }; 
+                            } else {
+                                return { color: "#ffffff", weight: 1.5, fillColor: "#E0E0E0", fillOpacity: 0.7 }; 
+                            }
+                        },
+                        onEachFeature: function (feature, layer) {
+                            var distName = feature.properties.name;
+                            
+                            // মাউস নিলে জেলার নাম দেখাবে
+                            layer.bindTooltip(distName, {sticky: true});
+                            
+                            // ক্লিক করলে ব্লগে রিডাইরেক্ট হবে
+                            layer.on('click', function () {
+                                if (visitedDistricts[distName] && visitedDistricts[distName] !== "#") {
+                                    window.location.href = visitedDistricts[distName];
+                                } else if (visitedDistricts[distName] === "#") {
+                                    alert(distName + " নিয়ে খুব শিগগিরই ব্লগ আসছে!");
+                                } else {
+                                    alert("আপনি এখনো " + distName + " ভ্রমণ করেননি বা কোনো ব্লগ নেই!");
+                                }
+                            });
+                            
+                            // মাউস হোভার করলে বর্ডার একটু মোটা হবে
+                            layer.on('mouseover', function () { this.setStyle({ weight: 3, color: '#222' }); });
+                            layer.on('mouseout', function () { this.setStyle({ weight: 1.5, color: '#ffffff' }); });
+                        }
+                    }).addTo(map);
+                });
         </script>
         
         <div class="blog-grid">
             <!-- ব্লগ পোস্ট ১ -->
             <div class="blog-card">
-                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
+                <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬</span>
-                    <h3 class="blog-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h3>
-                    <p class="blog-excerpt">চট্টগ্রামের সীতাকুণ্ডে অবস্থিত চন্দ্রনাথ পাহাড় ট্রেকিংয়ের অভিজ্ঞতা সবসময়ই রোমাঞ্চকর। পাহাড়ি আঁকাবাঁকা পথ আর মেঘের লুকোচুরি উপভোগ করতে করতে চূড়ায় ওঠার ক্লান্তি যেন নিমিষেই দূর হয়ে যায়।</p>
-                    <a href="post1.html" class="read-more">আরও পড়ুন</a>
+                    <h3 class="blog-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h3>
+                    <p class="blog-excerpt">চট্টগ্রামের সীতাকুণ্ডে অবস্থিত চন্দ্রনাথ পাহাড় ট্রেকিংয়ের অভিজ্ঞতা সবসময়ই রোমাঞ্চকর। পাহাড়ি আঁকাবাঁকা পথ আর মেঘের লুকোচুরি উপভোগ করতে করতে চূড়ায় ওঠার ক্লান্তি যেন নিমিষেই দূর হয়ে যায়。</p>
+                    <a href="post1.html" class="read-more">আরও পড়ুন</a>
                 </div>
             </div>
 
@@ -104,20 +142,20 @@
                 <img src="images/pic3.jpg" alt="ক্যাম্পিং">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> জুলাই ২০২৬</span>
-                    <h3 class="blog-title">পাহাড়ের বুকে তাঁবু বাস</h3>
-                    <p class="blog-excerpt">শহরের কোলাহল থেকে দূরে, প্রকৃতির খুব কাছাকাছি তাঁবু খাটিয়ে রাত কাটানোর অনুভূতিই অন্যরকম। রাতের নিস্তব্ধতায় ক্যাম্পফায়ারের পাশে বসে আড্ডা আর আকাশের তারা গোনার দারুণ এক স্মৃতি।</p>
-                    <a href="post2.html" class="read-more">আরও পড়ুন</a>
+                    <h3 class="blog-title">পাহাড়ের বুকে তাঁবু বাস</h3>
+                    <p class="blog-excerpt">শহরের কোলাহল থেকে দূরে, প্রকৃতির খুব কাছাকাছি তাঁবু খাটিয়ে রাত কাটানোর অনুভূতিই অন্যরকম। রাতের নিস্তব্ধতায় ক্যাম্পফায়ারের পাশে বসে আড্ডা আর আকাশের তারা গোনার দারুণ এক স্মৃতি。</p>
+                    <a href="post2.html" class="read-more">আরও পড়ুন</a>
                 </div>
             </div>
 
             <!-- ব্লগ পোস্ট ৩ -->
             <div class="blog-card">
-                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
+                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> জুন ২০২৬</span>
-                    <h3 class="blog-title">নাপিত্তাছড়া ট্রেইল জয়</h3>
-                    <p class="blog-excerpt">প্রকৃতির এক অপরূপ সৃষ্টি এই নাপিত্তাছড়া। ঝর্ণার শীতল জল আর সবুজ পাহাড়ি পথ ধরে হাঁটার রোমাঞ্চকর অভিজ্ঞতা সত্যি ভোলার মতো নয়। অফলাইন ম্যাপ আর ট্রেকিং গিয়ার সাথে থাকায় পথ চলতে বেশ সুবিধাই হয়েছে।</p>
-                    <a href="post3.html" class="read-more">আরও পড়ুন</a>
+                    <h3 class="blog-title">নাপিত্তাছড়া ট্রেইল জয়</h3>
+                    <p class="blog-excerpt">প্রকৃতির এক অপরূপ সৃষ্টি এই নাপিত্তাছড়া। ঝর্ণার শীতল জল আর সবুজ পাহাড়ি পথ ধরে হাঁটার রোমাঞ্চকর অভিজ্ঞতা সত্যি ভোলার মতো নয়। অফলাইন ম্যাপ আর ট্রেকিং গিয়ার সাথে থাকায় পথ চলতে বেশ সুবিধাই হয়েছে。</p>
+                    <a href="post3.html" class="read-more">আরও পড়ুন</a>
                 </div>
             </div>
         </div>
