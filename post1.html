@@ -3,61 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং | Zahid Hasan</title>
+    <title>চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং | জাহিদ হাসান</title>
     
     <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- গুগল ফন্ট ও ফন্ট অসাম -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- সোশ্যাল মিডিয়া শেয়ার মেটা ট্যাগ -->
+    <meta property="og:title" content="চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং - সীতাকুণ্ড">
+    <meta property="og:description" content="পাহাড়ি আঁকাবাঁকা পথ আর মেঘের আনাগোনা পেরিয়ে চন্দ্রনাথের চূড়ায় ওঠার রোমাঞ্চকর অভিজ্ঞতা।">
+    <meta property="og:image" content="https://zahidsphotography.pro.bd/images/pic1.jpg">
+
     <style>
-        body { font-family: 'Anek Bangla', sans-serif; margin: 0; padding: 0; background-color: #F9F9F9; color: #333333; }
-        header { text-align: center; padding: 40px 20px; background-color: #FFFFFF; border-bottom: 1px solid #EAEAEA; }
-        header h2 { margin: 0; font-size: 2em; color: #111111; font-weight: 700; }
-        .container { max-width: 800px; margin: 40px auto; padding: 20px; background: #FFFFFF; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .back-btn { display: inline-block; margin-bottom: 20px; color: #555555; text-decoration: none; font-weight: 600; transition: color 0.3s; }
-        .back-btn:hover { color: #4CAF50; }
-        .post-banner { width: 100%; height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
-        .post-title { font-size: 2.2em; margin: 0 0 10px 0; color: #111111; }
-        .post-meta { color: #888888; margin-bottom: 30px; font-size: 0.9em; border-bottom: 1px solid #EEEEEE; padding-bottom: 10px; }
-        .post-content { line-height: 1.8; font-size: 1.15em; color: #444444; }
-        .post-content p { margin-bottom: 20px; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 8px; margin: 30px 0; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        footer { text-align: center; padding: 30px; margin-top: 50px; color: #888; font-size: 0.9em; }
+        body {
+            font-family: 'Anek Bangla', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8F9FA;
+            color: #2D3748;
+            line-height: 1.85;
+            font-size: 1.1em;
+        }
+
+        /* হেডার ও নেভিগেশন */
+        header {
+            background-color: #FFFFFF;
+            padding: 20px 0;
+            border-bottom: 1px solid #E2E8F0;
+            text-align: center;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #4A5568;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: color 0.2s;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #10B981;
+        }
+
+        /* সিনেমাটিক ব্যানার */
+        .hero-banner {
+            height: 480px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('images/pic1.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-banner h1 {
+            font-size: 2.8em;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+        }
+        .post-meta {
+            font-size: 1em;
+            color: #E2E8F0;
+        }
+        .post-meta span {
+            margin: 0 10px;
+        }
+
+        /* মূল কন্টেন্ট কনটেইনার */
+        .article-container {
+            max-width: 820px;
+            margin: -60px auto 60px auto;
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 45px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        /* ট্রিপ সামারি কার্ড */
+        .trip-info-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            background-color: #F1F5F9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10B981;
+            margin-bottom: 35px;
+        }
+        .info-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 0.9em;
+            color: #64748B;
+            font-weight: 500;
+        }
+        .info-item p {
+            margin: 0;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        /* লেখার স্টাইল */
+        h2 {
+            color: #0F172A;
+            font-size: 1.6em;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 8px;
+        }
+        p {
+            margin-bottom: 22px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* ইন-লাইন ইমেজ ও ক্যাপশন */
+        .story-img {
+            margin: 35px 0;
+            text-align: center;
+        }
+        .story-img img {
+            width: 100%;
+            max-height: 480px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #64748B;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* হাইলাইট কোট */
+        blockquote {
+            margin: 30px 0;
+            padding: 20px 25px;
+            background-color: #ECFDF5;
+            border-left: 4px solid #10B981;
+            font-size: 1.15em;
+            color: #065F46;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* ট্রেকিং টিপস লিস্ট */
+        .tips-list {
+            background-color: #FFFBEB;
+            border-left: 4px solid #F59E0B;
+            padding: 20px 25px;
+            border-radius: 0 8px 8px 0;
+            margin: 30px 0;
+        }
+        .tips-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .tips-list li {
+            margin-bottom: 8px;
+            color: #78350F;
+        }
+
+        /* পেজ নেভিগেশন বাটন */
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid #E2E8F0;
+        }
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #0F172A;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-nav:hover {
+            background: #10B981;
+            transform: translateY(-2px);
+        }
+
+        /* ফুটার */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #FFFFFF;
+            border-top: 1px solid #EAEAEA;
+            color: #888888;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 25px; margin-top: -30px; }
+            .hero-banner h1 { font-size: 2em; }
+            .hero-banner { height: 380px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- হেডার -->
     <header>
-        <h2><a href="index.html" style="text-decoration: none; color: #111;">জাহিদ হাসান</a></h2>
+        <div class="nav-menu">
+            <a href="index.html">হোম</a>
+            <a href="blog.html" class="active">ব্লগ</a>
+            <a href="contact.html">যোগাযোগ</a>
+        </div>
     </header>
 
-    <div class="container">
-        <a href="blog.html" class="back-btn"><i class="fas fa-arrow-left"></i> ব্লগে ফিরে যান</a>
-        
-        <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড়" class="post-banner">
-        
-        <h1 class="post-title">চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h1>
-        <div class="post-meta"><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬ | ✍️ জাহিদ হাসান</div>
-        
-        <div class="post-content">
-            <p>চট্টগ্রামের সীতাকুণ্ডে অবস্থিত চন্দ্রনাথ পাহাড় ট্রেকিংয়ের অভিজ্ঞতা সবসময়ই রোমাঞ্চকর। পাহাড়ি আঁকাবাঁকা পথ আর মেঘের লুকোচুরি উপভোগ করতে করতে চূড়ায় ওঠার ক্লান্তি যেন নিমিষেই দূর হয়ে যায়।</p>
-            
-            <p>ভোরে ট্রেকিং শুরু করলে পাহাড়ের শান্ত পরিবেশ আর পাখির ডাক মনকে এক অদ্ভুত প্রশান্তি দেয়। অফলাইন ম্যাপ আর প্রয়োজনীয় গিয়ার সাথে থাকায় পথ চলতে বেশ সুবিধাই হয়েছে। চূড়ায় পৌঁছানোর পর চারপাশের যে দৃশ্য চোখে পড়ে, তা ভাষায় প্রকাশ করার মতো নয়।</p>
-
-            <!-- ভবিষ্যতে এখানে আপনার এডিট করা ভিডিও যুক্ত করতে পারবেন -->
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/CJZuG4Lk57w?si=AwjmVkB_qofOUs4d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!-- হিরো ব্যানার -->
+    <div class="hero-banner">
+        <div>
+            <h1>চন্দ্রনাথ পাহাড়ের চূড়ায় ট্রেকিং</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar-alt"></i> আগস্ট ২০২৬</span>
+                <span>•</span>
+                <span><i class="fas fa-map-marker-alt"></i> সীতাকুণ্ড, চট্টগ্রাম</span>
+                <span>•</span>
+                <span><i class="far fa-clock"></i> ৫ মিনিট পড়ার সময়</span>
             </div>
-        
-            <p>যারা প্রকৃতি ভালোবাসেন এবং একটু অ্যাডভেঞ্চার খুঁজছেন, তাদের জন্য এই ট্রেইলটি হতে পারে দারুণ একটি গন্তব্য!</p>
         </div>
     </div>
 
+    <!-- আর্টিকেল কন্টেন্ট -->
+    <div class="article-container">
+        
+        <!-- ট্রিপ ইনফো কার্ড -->
+        <div class="trip-info-box">
+            <div class="info-item">
+                <h4>স্থান</h4>
+                <p>সীতাকুণ্ড, চট্টগ্রাম</p>
+            </div>
+            <div class="info-item">
+                <h4>উচ্চতা</h4>
+                <p>প্রায় ১,১৫২ ফুট</p>
+            </div>
+            <div class="info-item">
+                <h4>ট্রেকিং সময়</h4>
+                <p>২ থেকে ৩ ঘণ্টা</p>
+            </div>
+            <div class="info-item">
+                <h4>ডিফিকাল্টি লেভেল</h4>
+                <p>মাঝারি (খাড়া সিঁড়ি)</p>
+            </div>
+        </div>
+
+        <p>চট্টগ্রামের সীতাকুণ্ড ইকোপার্ক সংলগ্ন চন্দ্রনাথ পাহাড় ট্রেকার এবং প্রকৃতিপ্রেমীদের কাছে চিরচেনা এক রোমাঞ্চ। প্রায় ১,১৫২ ফুট উঁচু এই পাহাড়ের চূড়ায় রয়েছে ঐতিহাসিক চন্দ্রনাথ মন্দির। নিচে বিস্তীর্ণ সবুজ আর উপরে মেঘের মেলা—এই দুইয়ের মেলবন্ধন যে কাউকে মুগ্ধ করতে বাধ্য।</p>
+
+        <h2>ভ্রমণ শুরুর গল্প ও যাত্রা</h2>
+        <p>ভোরবেলা চট্টগ্রাম শহর থেকে রওনা দিয়ে সীতাকুণ্ড বাজার পৌঁছাতে সকালের নরম রোদ কেবল গাছের ফাঁক দিয়ে উঁকি দিচ্ছে। বাজার থেকে সিএনজি নিয়ে সীতাকুণ্ড ইকোপার্কের গেট পেরিয়ে মন্দির প্রাঙ্গণে পৌঁছালাম। এখান থেকেই শুরু আসল শারীরিক ও মানসিক পরীক্ষা। চন্দ্রনাথ ওঠার দুটি পথ রয়েছে—বাম দিকের খাড়া পাহাড়ি পথ এবং ডান দিকের সিঁড়ির পথ। অভিজ্ঞ ট্রাভেলারদের পরামর্শ মেনেই আমরা বাম দিকের তুলনামূলক খাড়া পাহাড়ি ট্রেইল ধরে ওঠা শুরু করলাম।</p>
+
+        <div class="story-img">
+            <img src="images/pic1.jpg" alt="চন্দ্রনাথ পাহাড় ট্রেইল">
+            <div class="caption">পাহাড়ের চূড়ার দিকে এগিয়ে চলা সবুজ আঁকাবাঁকা পথ।</div>
+        </div>
+
+        <h2>মেঘ ও সিঁড়ির রোমাঞ্চ</h2>
+        <p>যত উপরে ওঠা যায়, বাতাসের আর্দ্রতা আর ঝিরিঝিরি ঠান্ডা হাওয়া শরীরে এক অদ্ভুত প্রশান্তি ছড়িয়ে দেয়। কিছু দূর ওঠার পরেই দেখা মিলল বিরূপাক্ষ মন্দিরের। সেখানে সামান্য জিরিয়ে নিয়ে আবার শুরু হলো খাড়া সিঁড়ি বেয়ে চূড়ান্ত আরোহণ। পথের শেষ অংশটুকু সবচেয়ে বেশি খাড়া, এক পা ফেলতে গিয়েও সচেতন থাকতে হয়। কিন্তু পেছনের দিকে তাকাতেই যখন পুরো সীতাকুণ্ড শহর আর দূরের বঙ্গোপসাগরের নীল জলরেখা চোখে পড়ে, তখন সব ক্লান্তি এক নিমিষেই মিলিয়ে যায়।</p>
+
+        <blockquote>
+            "পাহাড় জয় করার আসল আনন্দ চূড়ায় নয়, বরং সেই প্রতিটা ধাপে লুকিয়ে থাকে যেখানে শরীর থামতে বলে কিন্তু মন এগিয়ে যেতে চায়।"
+        </blockquote>
+
+        <div class="story-img">
+            <img src="images/pic2.jpg" alt="চূড়ায় পৌঁছানোর মুহূর্ত">
+            <div class="caption">চূড়া থেকে দিগন্ত বিস্তৃত পাহাড় আর মেঘের অনন্য দৃশ্য।</div>
+        </div>
+
+        <h2>ট্রেকিংয়ের প্রয়োজনীয় টিপস</h2>
+        <div class="tips-list">
+            <ul>
+                <li><strong>ট্রেকিং জুতো:</strong> অবশ্যই ভালো গ্রিপযুক্ত স্পোর্টস শু বা ট্রেকিং শু পরবেন।</li>
+                <li><strong>পানি ও গ্লুকোজ:</strong> সাথে অন্তত ১-২ লিটার খাবার পানি এবং স্যালাইন/গ্লুকোজ রাখবেন।</li>
+                <li><strong>লাঠি বা ট্রেকিং পোল:</strong> সিঁড়িতে ওঠার চেয়ে নামার সময় বাঁশের লাঠি হাঁটুর ওপর চাপ কমাতে দারুণ সাহায্য করে।</li>
+                <li><strong>পরিবেশ সচেতনতা:</strong> পাহাড়ে কোনো প্লাস্টিকের বোতল বা চিপসের প্যাকেট ফেলে পরিবেশ নষ্ট করবেন না।</li>
+            </ul>
+        </div>
+
+        <!-- নেভিগেশন বাটন -->
+        <div class="post-navigation">
+            <a href="blog.html" class="btn-nav"><i class="fas fa-arrow-left"></i> সব ব্লগ</a>
+            <a href="post2.html" class="btn-nav">পরবর্তী ব্লগ: তাঁবু বাস <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+    </div>
+
+    <!-- ফুটার -->
     <footer>
-        <p>&copy; 2026 Zahid Hasan.</p>
+        <p>&copy; 2026 Zahid Hasan. All Rights Reserved.</p>
     </footer>
 
 </body>
