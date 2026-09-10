@@ -34,32 +34,37 @@
         }
         .map-wrapper {
             position: relative;
-            max-width: 480px;
+            max-width: 520px;
             margin: 0 auto;
         }
         .map-wrapper svg {
             width: 100%;
             height: auto;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
         }
         
-        /* ভেক্টর পাথ স্টাইল */
+        /* বাস্তবসম্মত ভেক্টর শেপ স্টাইল */
         .division-path {
             fill: #E2E8F0;
             stroke: #FFFFFF;
-            stroke-width: 2.5;
+            stroke-width: 1.8;
+            stroke-linejoin: round;
+            stroke-linecap: round;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: fill 0.25s ease, stroke 0.25s ease, filter 0.25s ease;
         }
         .division-path.visited {
-            fill: #FACC15; /* হাইলাইট হলুদ */
+            fill: #FACC15; /* কাঙ্ক্ষিত গোল্ডেন হলুদ */
         }
         .division-path:hover {
             fill: #38BDF8;
             stroke: #0F172A;
+            stroke-width: 2.2;
         }
         .division-path.visited:hover {
             fill: #EAB308;
             stroke: #0F172A;
+            stroke-width: 2.2;
         }
         
         .map-labels text {
@@ -82,7 +87,7 @@
             border-radius: 6px;
             pointer-events: none;
             z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
             line-height: 1.4;
         }
 
@@ -122,50 +127,51 @@
             <div class="map-wrapper" id="map-wrapper">
                 <div id="map-tooltip"></div>
                 
-                <!-- সম্পূর্ণ স্বনির্ভর ইনলাইন ভেক্টর ম্যাপ -->
-                <svg viewBox="0 0 500 680" xmlns="http://www.w3.org/2000/svg">
-                    <!-- রংপুর অঞ্চল -->
-                    <path id="rangpur" class="division-path" data-name="রংপুর অঞ্চল (কুড়িগ্রাম)" data-url="#" 
-                          d="M 160 20 L 220 50 L 240 120 L 190 170 L 140 150 L 110 80 Z" />
+                <!-- প্রাকৃতিক সীমারেখা অনুযায়ী তৈরি করা বাংলাদেশের ভেক্টর ম্যাপ -->
+                <svg viewBox="0 0 600 760" xmlns="http://www.w3.org/2000/svg">
                     
-                    <!-- রাজশাহী অঞ্চল -->
-                    <path id="rajshahi" class="division-path" data-name="রাজশাহী অঞ্চল" data-url="#" 
-                          d="M 110 80 L 140 150 L 190 170 L 170 260 L 90 240 L 70 170 Z" />
+                    <!-- রংপুর বিভাগ (কুড়িগ্রাম সহ উত্তরবঙ্গীয় খাঁজকাটা সীমানা) -->
+                    <path id="rangpur" class="division-path" data-name="রংপুর বিভাগ (কুড়িগ্রাম)" data-url="#" 
+                          d="M175,32 C185,25 205,48 215,62 C230,85 240,70 250,95 C265,115 285,118 290,140 C280,165 245,160 235,178 C225,195 210,215 195,225 C175,200 160,185 162,150 C155,120 135,100 145,70 C150,50 165,40 175,32 Z" />
                     
-                    <!-- ময়মনসিংহ অঞ্চল -->
-                    <path id="mymensingh" class="division-path" data-name="ময়মনসিংহ অঞ্চল" data-url="#" 
-                          d="M 190 170 L 240 120 L 310 150 L 300 230 L 230 240 L 200 210 Z" />
+                    <!-- রাজশাহী বিভাগ (পশ্চিমাঞ্চলীয় পদ্মার বাঁক) -->
+                    <path id="rajshahi" class="division-path" data-name="রাজশাহী বিভাগ" data-url="#" 
+                          d="M162,150 C160,185 175,200 195,225 C190,250 205,280 190,305 C165,310 130,320 115,285 C95,255 105,220 120,185 C135,155 150,152 162,150 Z" />
                     
-                    <!-- সিলেট অঞ্চল (মৌলভীবাজার ভিজিটেড) -->
-                    <path id="sylhet" class="division-path visited" data-name="সিলেট অঞ্চল (মৌলভীবাজার - তাঁবুবাস)" data-url="post2.html" 
-                          d="M 310 150 L 410 140 L 440 210 L 380 280 L 300 230 Z" />
+                    <!-- ময়মনসিংহ বিভাগ (গারো পাহাড় সংলগ্ন উত্তর সীমানা) -->
+                    <path id="mymensingh" class="division-path" data-name="ময়মনসিংহ বিভাগ" data-url="#" 
+                          d="M235,178 C245,160 280,165 290,140 C325,145 365,135 385,155 C380,180 375,210 365,235 C335,240 300,245 270,230 C250,225 240,205 235,178 Z" />
                     
-                    <!-- ঢাকা অঞ্চল -->
-                    <path id="dhaka" class="division-path" data-name="ঢাকা অঞ্চল" data-url="#" 
-                          d="M 170 260 L 230 240 L 300 230 L 320 340 L 240 370 L 180 330 Z" />
+                    <!-- সিলেট বিভাগ (শ্রীমঙ্গল ও মৌলভীবাজারের পাহাড়ি বাঁক) -->
+                    <path id="sylhet" class="division-path visited" data-name="সিলেট বিভাগ (মৌলভীবাজার - তাঁবুবাস)" data-url="post2.html" 
+                          d="M385,155 C410,145 460,150 495,170 C515,195 520,240 480,265 C450,285 410,295 385,280 C365,270 375,210 385,155 Z" />
                     
-                    <!-- খুলনা অঞ্চল -->
-                    <path id="khulna" class="division-path" data-name="খুলনা অঞ্চল" data-url="#" 
-                          d="M 90 240 L 170 260 L 180 330 L 200 440 L 140 500 L 100 400 Z" />
+                    <!-- ঢাকা বিভাগ (বুড়িগঙ্গা ও মধ্যাঞ্চল) -->
+                    <path id="dhaka" class="division-path" data-name="ঢাকা বিভাগ" data-url="#" 
+                          d="M190,305 C205,280 190,250 195,225 C210,215 240,205 270,230 C300,245 335,240 365,235 C375,265 385,280 365,315 C345,345 315,370 275,375 C235,380 205,345 190,305 Z" />
                     
-                    <!-- বরিশাল অঞ্চল -->
-                    <path id="barishal" class="division-path" data-name="বরিশাল অঞ্চল" data-url="#" 
-                          d="M 200 440 L 240 370 L 280 400 L 270 490 L 210 510 Z" />
+                    <!-- খুলনা বিভাগ (সুন্দরবনের খাঁজকাটা ম্যানগ্রোভ উপকূল) -->
+                    <path id="khulna" class="division-path" data-name="খুলনা বিভাগ (সুন্দরবন)" data-url="#" 
+                          d="M115,285 C130,320 165,310 190,305 C205,345 235,380 240,430 C235,480 230,525 210,560 C170,565 145,540 135,480 C125,410 100,340 115,285 Z" />
                     
-                    <!-- চট্টগ্রাম অঞ্চল (চন্দ্রনাথ ও নাপিত্তাছড়া ভিজিটেড) -->
-                    <path id="chattogram" class="division-path visited" data-name="চট্টগ্রাম অঞ্চল (চন্দ্রনাথ পাহাড় ও নাপিত্তাছড়া)" data-url="post1.html" 
-                          d="M 300 230 L 380 280 L 440 360 L 470 510 L 420 620 L 360 500 L 320 340 Z" />
+                    <!-- বরিশাল বিভাগ (উপকূলীয় নদ-নদী ও দ্বীপ অঞ্চল) -->
+                    <path id="barishal" class="division-path" data-name="বরিশাল বিভাগ" data-url="#" 
+                          d="M240,430 C275,375 315,370 310,425 C315,475 320,520 295,565 C265,575 245,550 235,510 C230,470 238,445 240,430 Z" />
+                    
+                    <!-- চট্টগ্রাম বিভাগ (সীতাকুণ্ড, বান্দরবান ও কক্সবাজারের দীর্ঘ খাঁজকাটা পাহাড়) -->
+                    <path id="chattogram" class="division-path visited" data-name="চট্টগ্রাম বিভাগ (চন্দ্রনাথ পাহাড় ও নাপিত্তাছড়া)" data-url="post1.html" 
+                          d="M365,315 C385,280 410,295 435,325 C470,370 510,430 525,510 C540,590 500,685 470,740 C455,735 440,650 435,580 C420,500 375,440 330,420 C315,370 345,345 365,315 Z" />
 
-                    <!-- লেবেল -->
+                    <!-- প্রশাসনিক নামের লেবেল -->
                     <g class="map-labels">
-                        <text x="170" y="90">রংপুর</text>
-                        <text x="125" y="185">রাজশাহী</text>
-                        <text x="250" y="195">ময়মনসিংহ</text>
-                        <text x="375" y="210">সিলেট</text>
-                        <text x="245" y="305">ঢাকা</text>
-                        <text x="145" y="375">খুলনা</text>
-                        <text x="245" y="455">বরিশাল</text>
-                        <text x="395" y="440">চট্টগ্রাম</text>
+                        <text x="210" y="115">রংপুর</text>
+                        <text x="145" y="235">রাজশাহী</text>
+                        <text x="305" y="195">ময়মনসিংহ</text>
+                        <text x="445" y="225">সিলেট</text>
+                        <text x="275" y="295">ঢাকা</text>
+                        <text x="165" y="425">খুলনা</text>
+                        <text x="275" y="485">বরিশাল</text>
+                        <text x="430" y="480">চট্টগ্রাম</text>
                     </g>
                 </svg>
             </div>
@@ -193,7 +199,7 @@
             </div>
 
             <div class="blog-card">
-                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
+                <img src="images/pic2.jpg" alt="নাপিত্তাছড়া ট্রেইল">
                 <div class="blog-content">
                     <span class="blog-date"><i class="far fa-calendar-alt"></i> জুন ২০২৬</span>
                     <h3 class="blog-title">নাপিত্তাছড়া ট্রেইল জয়</h3>
